@@ -1,7 +1,6 @@
 
 #include <iostream>
 #include "ManageSchedule.h"
-#include "Student.h"
 
 
 using namespace std;

@@ -7,10 +7,7 @@
 #include <iostream>
 #include <set>
 #include <utility>
-#include "ManageSchedule.h"
-
 using namespace std;
-class ManageSchedule;
 
 class Student {
 private:
@@ -20,8 +17,8 @@ public:
     Student() = default;
     Student(int code_): code(code_) {}
     Student(int code_, string name_): code(code_), name(std::move(name_)) {}
-    int getCode() const {return code;};
-    string getName() const {return name;};
+    int getCode() const;
+    string getName() const;
     bool operator<(const Student& s) const;
 };
 

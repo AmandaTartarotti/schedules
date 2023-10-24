@@ -1,9 +1,12 @@
-"C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe" -G Ninja -S D:\UPorto\AED\schedule\schedules -B D:\UPorto\AED\schedule\schedules\cmake-build-debug
--- Found Doxygen: C:/Program Files/doxygen/bin/doxygen.exe (found version "1.9.8") found components: doxygen dot 
-CMake Error: File D:/UPorto/AED/schedule/schedules/docs/Doxyfile does not exist.
-CMake Error at CMakeLists.txt:21 (configure_file):
-  configure_file Problem configuring file
-
-
-Doxygen build started
--- Configuring incomplete, errors occurred!
+"C:\Program Files\JetBrains\CLion 2023.2.1\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" -S C:\Users\gonca\schedules -B C:\Users\gonca\schedules\cmake-build-debug
+-- The CXX compiler identification is GNU 13.1.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/JetBrains/CLion 2023.2.1/bin/mingw/bin/g++.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE) 
+Doxygen needs to be installed to generate the documentation.
+-- Configuring done (4.4s)
+-- Generating done (0.0s)
+-- Build files have been written to: C:/Users/gonca/schedules/cmake-build-debug
