@@ -17,7 +17,7 @@ class ManageSchedule{
         void readStudentClasses(const string& path);
         void readClasses(const string& path);
         void readClassesPerUc(const string& path);
-
+        set<Student> getAllStudents();
 };
 
 #endif //SCHEDULES_MANAGESCHEDULE_H

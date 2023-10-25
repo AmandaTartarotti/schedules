@@ -6,22 +6,22 @@
 #include <utility>
 #include <string>
 #include <set>
-#include "Student.h"
 using namespace std;
+class Student;
 
 class UcClass {
 private:
     string uccode;
     string classnum;
-    int size = 1;
+    int size;
     set<Student> studentClass;
 public:
-    UcClass(const string& uccode_, const string& classnum_): uccode(uccode_), classnum(classnum_) {}
+    UcClass(const string& uccode_, const string& classnum_): uccode(uccode_), classnum(classnum_) {size = 0;}
     string getUcCode();
     string getClassNum();
     void addStudent(Student s);
     int getSize();
-    set<Student> getStudents();
+    set<Student> getClassStud();
     void incrementSize();
 };
 

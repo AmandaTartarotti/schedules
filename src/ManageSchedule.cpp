@@ -28,13 +28,21 @@ void ManageSchedule::readStudentClasses(const string& path) {
         getline(iss, name, ',');
         getline(iss, ucCode, ',');
         getline(iss, classCode, ',');
+
         int code = stoi(strCode);
+        UcClass class_(ucCode, classCode);
 
         if (studentvec.empty() or studentvec.back().getCode() != code) {    //Adicionar alunos a um vetor com todos os alunos
             Student student = Student(code, name);
-            // Falta ainda meter aqui as turmas
+            student.addClass(class_);
             studentvec.push_back(student);
+            class_.addStudent(student);
+        } else {
+            studentvec.back().addClass(class_);
+            class_.addStudent(studentvec.back());
         }
+
+        class_.incrementSize();
     }
     students = set<Student>(studentvec.begin(), studentvec.end()); //Set com todos os alunos ordenados por número
 }
@@ -74,4 +82,8 @@ void ManageSchedule::readClasses(const string& path){
     while (getline(input_file, file_content)){
         items.push_back(file_content);
     }
+}
+
+set<Student> ManageSchedule::getAllStudents() {
+    return students;
 }

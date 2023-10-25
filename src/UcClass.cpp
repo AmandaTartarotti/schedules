@@ -2,7 +2,6 @@
 
 #include "UcClass.h"
 #include "Student.h"
-#include "ManageSchedule.h"
 
 string UcClass::getClassNum() {
     return classnum;
@@ -12,7 +11,7 @@ string UcClass::getUcCode() {
     return uccode;
 }
 
-set<Student> UcClass::getStudents() {
+set<Student> UcClass::getClassStud() {
     return studentClass;
 }
 
@@ -28,4 +27,3 @@ void UcClass::addStudent(Student s) {
     studentClass.insert(s);
     incrementSize();
 }
-

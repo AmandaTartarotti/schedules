@@ -12,3 +12,13 @@ int Student::getCode() const {
 string Student::getName() const {
     return name;
 }
+
+void Student::addClass(const UcClass& class_) {
+    classes.push_back(class_);
+}
+
+void Student::printClasses() {
+    for (UcClass class_ : classes) {
+        cout << class_.getUcCode() << " " << class_.getClassNum() << "\n";
+    }
+}
