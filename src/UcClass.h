@@ -16,17 +16,15 @@ private:
     string uccode;
     string classnum;
     int size;
-    set<Student> studentClass;
     vector<Lecture> lectureClass;
 public:
     UcClass(const string& uccode_, const string& classnum_);
     string getUcCode();
     string getClassNum();
-    void addStudent(Student s);
     int getSize();
-    set<Student> getClassStud();
     void incrementSize();
     bool operator<(UcClass s) const;
+    bool operator==(UcClass s);
     void addLecture(const Lecture& lecture);
     vector<Lecture> getLecture();
 };

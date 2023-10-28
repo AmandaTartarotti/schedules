@@ -17,9 +17,6 @@ string UcClass::getUcCode() {
     return uccode;
 }
 
-set<Student> UcClass::getClassStud() {
-    return studentClass;
-}
 
 int UcClass::getSize() {
     return size;
@@ -27,11 +24,6 @@ int UcClass::getSize() {
 
 void UcClass::incrementSize() {
     size += 1;
-}
-
-void UcClass::addStudent(Student s) {
-    studentClass.insert(s);
-    incrementSize();
 }
 
 bool UcClass::operator<(UcClass s) const {
@@ -48,4 +40,9 @@ void UcClass::addLecture(const Lecture& lecture) {
 vector<Lecture> UcClass::getLecture() {
     return lectureClass;
 }
+
+bool UcClass::operator==(UcClass s) {
+    return uccode == s.getUcCode() and classnum == s.getClassNum();
+}
+
 
