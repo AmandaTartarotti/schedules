@@ -7,7 +7,9 @@ include_directories(.)
 
 add_executable(schedules src/main.cpp src/ManageSchedule.h src/Student.h src/Student.cpp src/ManageSchedule.cpp
         src/UcClass.h
-        src/UcClass.cpp)
+        src/UcClass.cpp
+        src/Lecture.h
+        src/Lecture.cpp)
 
 
 # Doxygen Build

@@ -14,12 +14,12 @@ void ManageSchedule::readStudentClasses(const string& path) {
     string line;
     if (!input_file.is_open()) {
         cout << "Could not open the file - 'students_classes.csv'" << endl;
+        return;
     }
 
     getline(input_file, line);     // Skip first line
 
     vector<Student> studentvec;
-
     while (getline(input_file, line)){
 
         istringstream iss(line);
@@ -45,25 +45,6 @@ void ManageSchedule::readStudentClasses(const string& path) {
         class_.incrementSize();
     }
     students = set<Student>(studentvec.begin(), studentvec.end()); //Set com todos os alunos ordenados por número
-}
-
-void ManageSchedule::readClassesPerUc(const string& path) {
-    string file_content;
-    ifstream input_file(path);
-
-    if (!input_file.is_open()) {
-        cout << "Could not open the file - '" << path << "'" << endl;
-    }
-
-    istringstream iss(file_content);
-    vector<string> items;
-
-    getline(input_file, file_content);     // Skip first line
-
-    while (getline(input_file, file_content)){
-        items.push_back(file_content);
-    }
-
 }
 
 void ManageSchedule::readClasses(const string& path){

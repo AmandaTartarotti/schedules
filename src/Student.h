@@ -25,6 +25,7 @@ public:
     string getName() const;
     void addClass(const UcClass& class_);
     void printClasses();
+    vector<UcClass> getClasses() const;
     bool operator<(const Student& s) const;
 };
 

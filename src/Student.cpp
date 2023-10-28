@@ -22,3 +22,7 @@ void Student::printClasses() {
         cout << class_.getUcCode() << " " << class_.getClassNum() << "\n";
     }
 }
+
+vector<UcClass> Student::getClasses() const {
+    return classes;
+}

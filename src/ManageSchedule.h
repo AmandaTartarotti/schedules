@@ -16,7 +16,6 @@ class ManageSchedule{
         ManageSchedule() = default; // constructor
         void readStudentClasses(const string& path);
         void readClasses(const string& path);
-        void readClassesPerUc(const string& path);
         set<Student> getAllStudents();
 };
 
