@@ -112,3 +112,30 @@ set<Student> ManageSchedule::getAllStudents() {
 set<UcClass> ManageSchedule::getAllClasses() {
     return classes;
 }
+
+void ManageSchedule::printSchedule(int n) {
+    Student student(n);
+    auto it = students.find(student);
+    if (it == students.end()) {
+        cout << "Estudante não encontrado.\n";
+        return;
+    }
+    student = *it;
+
+    //Criar set ordenado por Dia/Hora
+    set<pair<Lecture, UcClass>> schedule;
+    for (UcClass class_ : student.getClasses()) {
+        for (const Lecture& lecture : class_.getLecture()) {
+            pair<Lecture, UcClass> temp = make_pair(lecture, class_);
+            schedule.insert(temp);
+        }
+    }
+
+    //Cout do horario
+    cout << "Horario de " << student.getName() << " (" << student.getCode() << ")\n";
+    cout << "\nUcCode-----Class----Lecture\n";
+    for (pair<Lecture, UcClass> item : schedule) {
+        cout << item.second.getUcCode() << " - " << item.second.getClassNum() << ": ";
+        cout << item.first.getDay() << ", " << item.first.getStartHour() << ", " << item.first.getDuration() << ", " << item.first.getType() << "\n";
+    }
+}

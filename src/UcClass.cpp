@@ -2,6 +2,7 @@
 
 #include "UcClass.h"
 #include "Student.h"
+#include <unordered_map>
 
 UcClass::UcClass(const string &uccode_, const string &classnum_) {
     uccode = uccode_;

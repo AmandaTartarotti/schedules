@@ -1,9 +1,20 @@
 
 #include <iostream>
 #include <iterator>
+#include <cctype>
 #include "ManageSchedule.h"
 
 using namespace std;
+
+bool isNumber(const string& str) {
+    for (char c : str) {
+        if (!isdigit(c)) {
+            return false;
+        }
+    }
+    return (!str.empty());
+}
+
 
 int main(){
     ManageSchedule manageschedule;
@@ -11,46 +22,38 @@ int main(){
     manageschedule.readClasses(path);
     manageschedule.readStudentClasses(path);
 
-    /**
-    //Teste alunos
-    for (auto c : manageschedule.getAllStudents()) {
-        cout << c.getName() << " " << c.getCode() << "\n";
-        for (auto v : c.getClasses()) {
-            cout << v.getClassNum() << " " << v.getUcCode() << " " << v.getSize() << " ";
-            for (auto z : v.getLecture()) {
-                cout << z.getType() << " ";
-            }
-            cout << "\n";
-        }
+    bool exit = false;
+    char option = '0';
+    while (!exit) {
+        cout << "--------------------------------------------------\n";
+        cout << "Selecione a opcao\n";
+        cout << "1 - Consultar horario de estudante\n";
+        cout << "0 - Sair\n";
+        cout << "--------------------------------------------------" << endl;
+        cout << "Option: ";
+        cin >> option;
         cout << "\n";
-    }
-    **/
+        string n;
 
-    /**
-    //Teste turmas
-    for (auto c : manageschedule.getAllClasses()) {
-        cout << c.getUcCode() << " " << c.getClassNum() << " " << c.getSize() << "\n";
-        for (auto v : c.getLecture()) {
-            cout << v.getDay() << " " << v.getStartHour() << " " << v.getDuration() << " " << v.getType() << "\n";
-        }
-        cout << "\n";
-    }
-    **/
-
-    /**
-    //Teste classe Lecture
-    Student stud(202205318, "Goncalo");
-    UcClass class_("Leic01", "01Leic02");
-    Lecture slot("Monday", 10.5, 1.5, "TP");
-    class_.addLecture(slot);
-    stud.addClass(class_);
-    cout << stud.getName() << " " << stud.getCode() << "\n";
-    for (auto c : stud.getClasses()) {
-        cout << c.getUcCode() << " " << c.getClassNum() << " " << c.getSize() << "\n";
-        for (auto v : c.getLecture()) {
-            cout << v.getDay() << " " << v.getStartHour() << " " << v.getDuration() << " " << v.getType() << "\n";
+        switch (option) {
+            case '0':
+                exit = true;
+                break;
+            case '1':
+                cout << "--------------------------------------------------\n";
+                cout << "Insira o seu numero UP: ";
+                cin >> n; cout << "\n";
+                if(n.length() != 9 or !isNumber(n)) {
+                    cout << "Numero invalido. Por favor, tente novamente." << endl;
+                    break;
+                }
+                manageschedule.printSchedule(stoi(n));
+                break;
+            default:
+                cout << "Opcao invalida. Por favor, tente novamente." << endl;
+                break;
         }
     }
-    **/
+    cout << "Goodbye!" << endl;
     return 0;
 }

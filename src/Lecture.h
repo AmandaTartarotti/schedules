@@ -15,6 +15,7 @@ public:
     string getType() const;
     float getStartHour() const;
     float getDuration() const;
+    bool operator<(const Lecture &lecture) const;
 };
 
 #endif //SCHEDULES_LECTURE_H
