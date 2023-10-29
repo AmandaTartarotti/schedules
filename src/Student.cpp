@@ -5,6 +5,11 @@ bool Student::operator<(const Student &s) const {
     return code < s.getCode();
 }
 
+bool Student::operator>(const Student &s) const {
+    return code > s.getCode();
+}
+
+
 int Student::getCode() const {
     return code;
 }

@@ -27,6 +27,7 @@ public:
     void printClasses();
     vector<UcClass> getClasses() const;
     bool operator<(const Student& s) const;
+    bool operator>(const Student& s) const;
 };
 
 

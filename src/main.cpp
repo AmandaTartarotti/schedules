@@ -15,6 +15,32 @@ bool isNumber(const string& str) {
     return (!str.empty());
 }
 
+void listas(ManageSchedule &manageschedule) {
+    char option = '0';
+    cout << "--------------------------------------------------\n";
+    cout << "Selecione a opcao\n";
+    cout << "1 - Todos os estudantes\n";
+    cout << "2 - Estudantes por turma de uma UC\n";
+    //cout << "3 - Estudantes por ano\n";
+    //cout << "4 - Estudantes por UC\n";
+    cout << "0 - Voltar ao menu principal\n";
+    cout << "--------------------------------------------------" << endl;
+    cout << "Option:";
+    cin >> option;
+    switch (option) {
+        default:
+            cout << "Opcao invalida. Por favor, tente novamente." << endl;
+            break;
+        case '0':
+           return;
+        case '1':
+            manageschedule.printAllStudents(manageschedule.getAllStudents());
+            break;
+        case '2':
+            manageschedule.printStudentsInClass();
+            break;
+    }
+}
 
 int main(){
     ManageSchedule manageschedule;
@@ -28,11 +54,11 @@ int main(){
         cout << "--------------------------------------------------\n";
         cout << "Selecione a opcao\n";
         cout << "1 - Consultar horario de estudante\n";
+        cout << "2 - Efetuar listagem\n";
         cout << "0 - Sair\n";
         cout << "--------------------------------------------------" << endl;
-        cout << "Option: ";
+        cout << "Option:";
         cin >> option;
-        cout << "\n";
         string n;
 
         switch (option) {
@@ -49,11 +75,15 @@ int main(){
                 }
                 manageschedule.printSchedule(stoi(n));
                 break;
+            case '2':
+                listas(manageschedule);
+                break;
             default:
                 cout << "Opcao invalida. Por favor, tente novamente." << endl;
                 break;
         }
     }
     cout << "Goodbye!" << endl;
+
     return 0;
 }

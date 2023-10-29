@@ -19,7 +19,9 @@ class ManageSchedule{
         void readClasses(const string& path);
         set<Student> getAllStudents();
         set<UcClass> getAllClasses();
-        void printSchedule(int n);
+        void printSchedule(int n);                             //Listagem do horário de um aluno
+        void printAllStudents(const set<Student>& student);    //Listagem de todos os alunos
+        void printStudentsInClass();                           //Listagem de alunos em uma turma
 };
 
 #endif //SCHEDULES_MANAGESCHEDULE_H

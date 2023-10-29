@@ -6,6 +6,9 @@
 #include <string>
 #include <sstream>
 #include <map>
+#include <functional>
+#include <algorithm>
+
 using namespace std;
 
 
@@ -31,18 +34,19 @@ void ManageSchedule::readStudentClasses(const string& path) {
 
         int code = stoi(strCode);
         UcClass class_(ucCode, classCode);
+        Student student = Student(code, name);
 
         auto pos = classes.find(class_);                 // Incrementar tamanho da turma
         if (pos != classes.end()) {
-            UcClass newClass_ = *pos;
+            UcClass temp = *pos;
             classes.erase(pos);
-            newClass_.incrementSize();
-            classes.insert(newClass_);
-            class_ = newClass_;
+            temp.incrementSize();
+            class_ = temp;
+            class_.addStudent(student);
+            classes.insert(class_);
         }
 
         if (studentvec.empty() or studentvec.back().getCode() != code) {    //Adicionar alunos a um vetor com todos os alunos
-            Student student = Student(code, name);
             student.addClass(class_);
             studentvec.push_back(student);
         } else {
@@ -138,4 +142,57 @@ void ManageSchedule::printSchedule(int n) {
         cout << item.second.getUcCode() << " - " << item.second.getClassNum() << ": ";
         cout << item.first.getDay() << ", " << item.first.getStartHour() << ", " << item.first.getDuration() << ", " << item.first.getType() << "\n";
     }
+}
+
+void ManageSchedule::printAllStudents(const set<Student>& student) {
+    char option = '0', option2 = '0';
+    cout << "--------------------------------------------------\n";
+    cout << "Selecione a opcao\n";
+    cout << "1 - Ordenar por numero UP\n";
+    cout << "2 - Ordenar alfabeticamente\n";
+    cout << "3 - Ordenar ascendentemente\n";
+    cout << "4 - Ordenar decrescentemente\n";
+    cout << "--------------------------------------------------" << endl;
+    cout << "Option 1:";
+    cin >> option;
+    cout << "Option 2:";
+    cin >> option2; cout << "\n";
+    vector<Student> temp = vector<Student>(student.begin(),student.end());
+    if (option == '1' and option2 == '3') {
+        sort(temp.begin(), temp.end(),[](Student const &a, Student const &b){return a.getCode() < b.getCode();});
+    } else if (option == '1' and option2 == '4') {
+        sort(temp.begin(), temp.end(),[](Student const &a, Student const &b){return a.getCode() > b.getCode();});
+    } else if (option == '2' and option2 == '3') {
+        sort(temp.begin(), temp.end(),[](Student const &a, Student const &b){return a.getName() < b.getName();});
+    } else if (option == '2' and option2 == '4') {
+        sort(temp.begin(), temp.end(),[](Student const &a, Student const &b){return a.getName() > b.getName();});
+    } else {
+        cout << "Opcoes invalidas. Por favor, tente novamente." << endl;
+        return;
+    }
+    if (option == '1') {
+        for (const Student& stud : temp) {
+            cout << stud.getCode() << " - " << stud.getName() << "\n";
+        }
+    } else {
+        for (const Student& stud : temp) {
+            cout << stud.getName() << " - " << stud.getCode() << "\n";
+        }
+    }
+}
+
+void ManageSchedule::printStudentsInClass() {
+    string ucCode, classCode;
+    cout << "Introduza o codigo da UC (L.EICXXX)\n";
+    cin >> ucCode; cout << "\n";
+    cout << "Introduza o codigo da turma (XLEICXX)\n";
+    cin >> classCode; cout << "\n";
+    UcClass class_(ucCode, classCode);
+    auto it = classes.find(class_);
+    if (it != classes.end()) {
+        UcClass newClass = *it;
+        printAllStudents(newClass.getStudents());
+        return;
+    }
+    cout << "Não foi possível encontrar a turma. Por favor, tente novamente.\n";
 }

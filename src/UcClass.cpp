@@ -46,4 +46,12 @@ bool UcClass::operator==(UcClass s) {
     return uccode == s.getUcCode() and classnum == s.getClassNum();
 }
 
+void UcClass::addStudent(const Student& stud) {
+    studentClass.insert(stud);
+}
+
+set<Student> UcClass::getStudents() {
+    return studentClass;
+}
+
 
