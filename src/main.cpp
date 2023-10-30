@@ -2,7 +2,10 @@
 #include <iostream>
 #include <iterator>
 #include <cctype>
+#include <vector>
+#include <algorithm>
 #include "ManageSchedule.h"
+#include "Lecture.h"
 
 using namespace std;
 

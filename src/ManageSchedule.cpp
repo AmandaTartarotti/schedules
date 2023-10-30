@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include <map>
+#include <unordered_map>
 #include <functional>
 #include <algorithm>
 
@@ -35,6 +35,7 @@ void ManageSchedule::readStudentClasses(const string& path) {
         int code = stoi(strCode);
         UcClass class_(ucCode, classCode);
         Student student = Student(code, name);
+
 
         auto pos = classes.find(class_);                 // Incrementar tamanho da turma
         if (pos != classes.end()) {
@@ -81,7 +82,7 @@ void ManageSchedule::readClasses(const string& path){
         float startHour = stof(shour);
         float duration = stof(dur);
 
-        Lecture lecture(weekday,startHour, duration, type);
+        Lecture lecture(classCode, weekday,startHour, duration, type);
 
         // Adicionar uma aula a uma turma num vetor com todas as turmas
         if (classvec.empty() or classvec.back().getUcCode() != ucCode) {    // Caso mude o código da Uc, criar nova turma com novo UcCode
