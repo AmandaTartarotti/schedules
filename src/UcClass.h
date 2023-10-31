@@ -21,6 +21,7 @@ public:
     UcClass(const string& uccode_);
     string getUcCode();
     bool findLecture(string lectureCode_) const;
+    Lecture getLecture(string lectureCode_) const;
     void getLectureAndIncrement(string lectureCode_);
     int getSize();
     void incrementSize();
@@ -29,7 +30,7 @@ public:
     void addLecture(const Lecture& lecture);
     vector<Lecture> getLecture();
     set<Student> getStudents();
-    void addStudent(const Student& stud);
+    void addStudent(Student &stud, string lectureCode_);
 };
 
 #endif //SCHEDULES_UCCLASS_H

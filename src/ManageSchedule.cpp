@@ -85,8 +85,8 @@ void ManageSchedule::readStudentClasses(const string& path) {
                 UcClass temp = *pos;
                 classes.erase(pos);
                 temp.incrementSize();                                      // incrementa a quantidade de estudantes da uc
-                temp.addStudent(student);                           // add estudante ao vetor<Student> de class_
-                temp.getLectureAndIncrement(lectureCode);     // add estudante a lecture que está no vetor<Lecture> de class_
+                temp.addStudent(student, lectureCode);                             // add estudante ao vetor<Student> de class_
+                temp.getLectureAndIncrement(lectureCode);        // add quantidade de estudante a lecture que está no vetor<Lecture> de class_
                 classes.insert(temp);
                 students.insert(student);                              //add o estudente ao set students
             } else {
@@ -95,6 +95,7 @@ void ManageSchedule::readStudentClasses(const string& path) {
         }
     }
 }
+
 
     set<Student> ManageSchedule::getAllStudents() {
         return students;

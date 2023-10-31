@@ -17,8 +17,11 @@ private:
     int code;
     string name;
     vector<UcClass> classes;
+    vector<Lecture> lectures;
 public:
     Student() = default;
+    void addLecture(Lecture lecture_);
+    vector<Lecture> getLectures() const;
     Student(int code_): code(code_) {}
     Student(int code_, string name_): code(code_), name(std::move(name_)) {}
     int getCode() const;

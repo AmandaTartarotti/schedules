@@ -12,7 +12,7 @@ void printMenu(){
     cout << "3 - Consult the schedule of a given student" << endl;
     // AVISO: tem que criar ainda
     cout << "4 - Consult the schedule of a given class" << endl;
-    cout << "" << endl;
+    cout << "5 - Add Student to a new UC" << endl;
     cout << "10 - Exit" << endl;
 }
 

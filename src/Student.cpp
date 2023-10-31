@@ -10,6 +10,13 @@ bool Student::operator>(const Student &s) const {
     return code > s.getCode();
 }
 
+void Student::addLecture(Lecture lecture_){
+    lectures.push_back(lecture_);
+}
+
+vector<Lecture> Student::getLectures() const{
+    return lectures;
+}
 
 int Student::getCode() const {
     return code;

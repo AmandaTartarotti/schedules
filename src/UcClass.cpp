@@ -9,7 +9,7 @@ UcClass::UcClass(const string &uccode_): lectureClass(), studentClass() {
 }
 
 void UcClass::getLectureAndIncrement(string lectureCode_) { //busca a referencia de uma lecture
-    for (auto element : lectureClass){
+    for (Lecture &element : this->lectureClass){
         if (element.getLectureCode() == lectureCode_) {
             element.incrementNumberStudents();
         }
@@ -18,7 +18,7 @@ void UcClass::getLectureAndIncrement(string lectureCode_) { //busca a referencia
 
 
 bool UcClass::findLecture(string lectureCode_) const {
-    for (auto element : lectureClass){
+    for (auto element : this->lectureClass){
         if (element.getLectureCode() == lectureCode_)
             return true;
     }
@@ -28,7 +28,6 @@ bool UcClass::findLecture(string lectureCode_) const {
 string UcClass::getUcCode() {
     return uccode;
 }
-
 
 int UcClass::getSize() {
     return size;
@@ -56,12 +55,14 @@ bool UcClass::operator==(UcClass s) {
     return uccode == s.getUcCode();
 }
 
-void UcClass::addStudent(const Student& stud) {
+void UcClass::addStudent(Student &stud, string lectureCode_) {
     studentClass.insert(stud);
+    for (Lecture &element: this->lectureClass) {
+        if (element.getLectureCode() == lectureCode_)
+            stud.addLecture(element);
+    }
 }
 
 set<Student> UcClass::getStudents() {
     return studentClass;
 }
-
-

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-
+/*
 bool isNumber(const string& str) {
     for (char c : str) {
         if (!isdigit(c)) {
@@ -19,7 +19,7 @@ bool isNumber(const string& str) {
     }
     return (!str.empty());
 }
-/*
+
 void listas(ManageSchedule &manageschedule) {
     char option = '0';
     cout << "--------------------------------------------------\n";
@@ -100,9 +100,9 @@ int main(){
 
     manageschedule.readClasses(path);
     manageschedule.readStudentClasses(path);
-    // manageschedule.getAllClasses();
-    // manageschedule.getAllStudents();
-
+    manageschedule.getAllClasses();
+    manageschedule.getAllStudents();
+    /*
     bool state = true;
     int menuId = 0;
 
@@ -128,6 +128,6 @@ int main(){
                 break;
         }
     }
-
+    */
     return 0;
 }
