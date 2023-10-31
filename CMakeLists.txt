@@ -9,7 +9,9 @@ add_executable(schedules src/main.cpp src/ManageSchedule.h src/Student.h src/Stu
         src/UcClass.h
         src/UcClass.cpp
         src/Lecture.h
-        src/Lecture.cpp)
+        src/Lecture.cpp
+        src/Menu.cpp
+        src/Menu.h)
 
 
 # Doxygen Build

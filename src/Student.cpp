@@ -1,5 +1,6 @@
-//Student.cpp
+
 #include "Student.h"
+using namespace std;
 
 bool Student::operator<(const Student &s) const {
     return code < s.getCode();
@@ -22,9 +23,10 @@ void Student::addClass(const UcClass& class_) {
     classes.push_back(class_);
 }
 
+
 void Student::printClasses() {
     for (UcClass class_ : classes) {
-        cout << class_.getUcCode() << " " << class_.getClassNum() << "\n";
+        cout << class_.getUcCode() << endl;
     }
 }
 

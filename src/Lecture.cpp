@@ -7,6 +7,15 @@ Lecture::Lecture(const string &lecturecode_, const std::string &day_, float star
     startHour = startHour_;
     duration = duration_;
     type = type_;
+    numberStudents = 0;
+}
+
+int Lecture::getNumberStudents() {
+    return numberStudents;
+}
+
+void Lecture::incrementNumberStudents() {
+    numberStudents += 1;
 }
 
 string Lecture::getLectureCode() const{

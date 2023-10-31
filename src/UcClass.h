@@ -14,14 +14,14 @@ class Student;
 class UcClass {
 private:
     string uccode;
-    string classnum;
     int size;
     vector<Lecture> lectureClass;
     set<Student> studentClass;
 public:
-    UcClass(const string& uccode_, const string& classnum_);
+    UcClass(const string& uccode_);
     string getUcCode();
-    string getClassNum();
+    bool findLecture(string lectureCode_) const;
+    void getLectureAndIncrement(string lectureCode_);
     int getSize();
     void incrementSize();
     bool operator<(UcClass s) const;

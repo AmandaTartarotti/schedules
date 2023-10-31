@@ -6,8 +6,10 @@
 #include <algorithm>
 #include "ManageSchedule.h"
 #include "Lecture.h"
+#include "Menu.h"
 
 using namespace std;
+
 
 bool isNumber(const string& str) {
     for (char c : str) {
@@ -17,7 +19,7 @@ bool isNumber(const string& str) {
     }
     return (!str.empty());
 }
-
+/*
 void listas(ManageSchedule &manageschedule) {
     char option = '0';
     cout << "--------------------------------------------------\n";
@@ -87,6 +89,45 @@ int main(){
         }
     }
     cout << "Goodbye!" << endl;
+
+    return 0;
+}*/
+
+int main(){
+    ManageSchedule manageschedule;
+
+    string path("../givenDocs/");
+
+    manageschedule.readClasses(path);
+    manageschedule.readStudentClasses(path);
+    // manageschedule.getAllClasses();
+    // manageschedule.getAllStudents();
+
+    bool state = true;
+    int menuId = 0;
+
+
+    while(state) {
+
+        printMenu();
+        cin >> menuId;
+
+        switch (menuId) {
+            case 1:
+                printAllStudents(manageschedule.getAllStudents());
+                break;
+            case 2:
+                printStudentsInClass(manageschedule.getAllClasses());
+                break;
+            case 10:
+                cout << "Goodbye!";
+                state = false;
+                break;
+            default:
+                cout << "Invalid option. Exiting." << endl;
+                break;
+        }
+    }
 
     return 0;
 }

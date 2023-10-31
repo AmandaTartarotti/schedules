@@ -3,14 +3,26 @@
 #include "UcClass.h"
 #include "Student.h"
 
-UcClass::UcClass(const string &uccode_, const string &classnum_) {
+UcClass::UcClass(const string &uccode_): lectureClass(), studentClass() {
     uccode = uccode_;
-    classnum = classnum_;
     size = 0;
 }
 
-string UcClass::getClassNum() {
-    return classnum;
+void UcClass::getLectureAndIncrement(string lectureCode_) { //busca a referencia de uma lecture
+    for (auto element : lectureClass){
+        if (element.getLectureCode() == lectureCode_) {
+            element.incrementNumberStudents();
+        }
+    }
+}
+
+
+bool UcClass::findLecture(string lectureCode_) const {
+    for (auto element : lectureClass){
+        if (element.getLectureCode() == lectureCode_)
+            return true;
+    }
+    return false;
 }
 
 string UcClass::getUcCode() {
@@ -26,10 +38,8 @@ void UcClass::incrementSize() {
     size += 1;
 }
 
+
 bool UcClass::operator<(UcClass s) const {
-    if (uccode == s.getUcCode()) {
-        return classnum < s.getClassNum();
-    }
     return uccode < s.getUcCode();
 }
 
@@ -41,8 +51,9 @@ vector<Lecture> UcClass::getLecture() {
     return lectureClass;
 }
 
+
 bool UcClass::operator==(UcClass s) {
-    return uccode == s.getUcCode() and classnum == s.getClassNum();
+    return uccode == s.getUcCode();
 }
 
 void UcClass::addStudent(const Student& stud) {
