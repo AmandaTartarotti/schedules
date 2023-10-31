@@ -97,13 +97,52 @@ void ManageSchedule::readStudentClasses(const string& path) {
 }
 
 
-    set<Student> ManageSchedule::getAllStudents() {
-        return students;
-    }
+set<Student> ManageSchedule::getAllStudents() {
+    return students;
+}
 
-    set<UcClass> ManageSchedule::getAllClasses() {
+set<UcClass> ManageSchedule::getAllClasses() {
+        for (auto element : classes){
+           vector<Lecture> teste = element.getLecture();
+           for (auto element_ : teste){
+               cout << element_.getLectureCode() << " " << element_.getNumberStudents() << endl;
+           }
+        }
         return classes;
+}
+
+Student ManageSchedule::getStudent(int upcode){
+    for (auto &element : this->students){
+            if (element.getCode() == upcode){
+                cout << "We are talking about " << element.getName() << "!" << endl;
+                return element;
+            }
     }
+    throw std::runtime_error("Bad news, no student was not found! Are you sure this is the right number?");
+}
+
+UcClass ManageSchedule::getUc(string ucCode){
+    for (auto element : this->classes){
+        if (element.getUcCode() == ucCode){
+            return element;
+        }
+    }
+    throw std::runtime_error("Bad news, no UC was not found! Are you sure this is the right code?");
+}
+
+void ManageSchedule::addNewStudent(int upcode){
+        Student rockStar = getStudent(upcode);
+        vector<Lecture> allLectures = rockStar.getLectures();
+        if (allLectures.size() < 7){                                    // check how many lectures the student is enrolled
+            string ucCode;
+            cout << "Now, please enter the UC code" << endl;
+            cin >> ucCode;
+            UcClass uc = getUc(ucCode);
+            uc.newStudent(rockStar);
+        } else {
+            cout << "Ops! This student is already registered in 7 UCs";
+        }
+}
 
     /* TEM QUE REVISAR
 void ManageSchedule::printSchedule(int n) {

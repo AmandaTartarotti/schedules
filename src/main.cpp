@@ -100,18 +100,17 @@ int main(){
 
     manageschedule.readClasses(path);
     manageschedule.readStudentClasses(path);
-    manageschedule.getAllClasses();
-    manageschedule.getAllStudents();
-    /*
+    //manageschedule.getUc("L.EIC004");
+    //manageschedule.getStudent(202060507);
+    //manageschedule.getAllClasses();
+    //manageschedule.getAllStudents();
+
     bool state = true;
     int menuId = 0;
-
+    printMenu();
 
     while(state) {
-
-        printMenu();
         cin >> menuId;
-
         switch (menuId) {
             case 1:
                 printAllStudents(manageschedule.getAllStudents());
@@ -119,15 +118,21 @@ int main(){
             case 2:
                 printStudentsInClass(manageschedule.getAllClasses());
                 break;
-            case 10:
-                cout << "Goodbye!";
-                state = false;
+            case 5:
+                int numUp;
+                cout << "Please, enter the student's up number" << endl;
+                cin >> numUp;
+                manageschedule.addNewStudent(numUp);
                 break;
-            default:
-                cout << "Invalid option. Exiting." << endl;
-                break;
-        }
+        case 10:
+            cout << "Goodbye!";
+            state = false;
+            break;
+        default:
+            cout << "Invalid option. Exiting." << endl;
+            break;
     }
-    */
-    return 0;
+}
+
+return 0;
 }

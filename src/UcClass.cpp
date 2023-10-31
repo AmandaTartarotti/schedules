@@ -25,6 +25,14 @@ bool UcClass::findLecture(string lectureCode_) const {
     return false;
 }
 
+bool UcClass::findStudent(int upCode) const {
+    for (auto element : this->studentClass){
+        if (element.getCode() == upCode)
+            return true;
+    }
+    return false;
+}
+
 string UcClass::getUcCode() {
     return uccode;
 }
@@ -65,4 +73,24 @@ void UcClass::addStudent(Student &stud, string lectureCode_) {
 
 set<Student> UcClass::getStudents() {
     return studentClass;
+}
+
+void UcClass::newStudent(Student &student) {
+    if (!findStudent(student.getCode())){
+        bool vacancyFound = false;
+        for (Lecture &element : lectureClass){                      // check the first lecture with a vacancy
+            if (element.getNumberStudents() < 27){                 // check the first element where there is a place
+                element.incrementNumberStudents();
+                student.addLecture(element);
+                cout << "Sucess! The student is now enrolled in this UC at Lecture " << element.getLectureCode() << endl;
+                vacancyFound = true;
+                break;
+            }
+        }
+        if (!vacancyFound) {
+            cout << "Sorry! There is no available vacancy in this UC." << endl;
+        }
+    } else {
+        cout << "Hey, this student is already enrolled!" << endl;
+    }
 }
