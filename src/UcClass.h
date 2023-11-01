@@ -24,14 +24,16 @@ public:
     void getLectureAndIncrement(string lectureCode_);
     int getSize();
     void incrementSize();
+    void decreaseSize();
     bool operator<(UcClass s) const;
     bool operator==(UcClass s);
-    void addLecture(const Lecture& lecture);
+    void addLecture(Lecture lecture);
     vector<Lecture> getLecture();
     set<Student> getStudents();
     void addStudent(Student &stud, string lectureCode_);
     void newStudent(Student &student);
     bool findStudent(int upCode) const;
+    void removeStudent(Student &dropout, string lectureCode_);
 };
 
 #endif //SCHEDULES_UCCLASS_H

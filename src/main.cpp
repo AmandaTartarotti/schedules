@@ -111,6 +111,7 @@ int main(){
     // /*
     bool state = true;
     int menuId = 0;
+    Student rockStar;
     printMenu();
 
     while(state) {
@@ -122,19 +123,27 @@ int main(){
             case 2:
                 printStudentsInClass(manageschedule.getAllClasses());
                 break;
-            case 5:
-                int numUp;
-                cout << "Please, enter the student's up number" << endl;
-                cin >> numUp;
-                manageschedule.addNewStudent(numUp);
+            case 3:
+                cout << "not yet here";
                 break;
-        case 10:
-            cout << "Goodbye!";
-            state = false;
-            break;
-        default:
-            cout << "Invalid option. Exiting." << endl;
-            break;
+            case 4:
+                cout << "not yet here";
+                break;
+            case 5:
+                rockStar = manageschedule.getStudent();
+                manageschedule.addNewStudent(rockStar);
+                break;
+            case 6:
+                rockStar = manageschedule.getStudent();
+                manageschedule.removeStudent(rockStar);
+                break;
+            case 10:
+                cout << "Goodbye!";
+                state = false;
+                break;
+            default:
+                cout << "Invalid option. Exiting." << endl;
+                break;
     }
 } // **/
 

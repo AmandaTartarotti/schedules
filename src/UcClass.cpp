@@ -45,13 +45,17 @@ void UcClass::incrementSize() {
     size += 1;
 }
 
+void UcClass::decreaseSize() {
+    size -= 1;
+}
 
 bool UcClass::operator<(UcClass s) const {
     return uccode < s.getUcCode();
 }
 
-void UcClass::addLecture(const Lecture& lecture) {
+void UcClass::addLecture(Lecture lecture) {
     lectureClass.push_back(lecture);
+    //cout << lectureClass.size() << " ";
 }
 
 vector<Lecture> UcClass::getLecture() {
@@ -88,6 +92,8 @@ void UcClass::newStudent(Student &student) {
                     cout << "Sucess! The student is now enrolled in this UC at Lecture " << element.getLectureCode() << endl;
                     vacancyFound = true;
                     student.addClass(*this, element.getLectureCode());
+                    studentClass.insert(student);
+                    this->incrementSize();
                     break;
                 }
             }
@@ -99,3 +105,23 @@ void UcClass::newStudent(Student &student) {
         cout << "Hey, this student is already enrolled!" << endl;
     }
 }
+
+void UcClass::removeStudent(Student &dropout, string lectureCode){
+
+    for (Lecture &element : lectureClass){
+        if (element.getLectureCode() == lectureCode){
+            dropout.removeClass(*this, element);    // remove Lecture and Uc from Student Object
+            element.decreaseNumberStudents();                 //remove student from Lecture object counting
+            cout << "The student is been removed.. ";
+        }
+    }
+
+    for (auto &element : studentClass){
+        if (element.getCode() == dropout.getCode()){
+            studentClass.erase(element);                // remove student from UC
+            this->decreaseSize();                          // remove student from UC counting
+            cout << "Done, the student is now removed from this UC!";
+        }
+    }
+}
+

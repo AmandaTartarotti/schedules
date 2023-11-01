@@ -25,7 +25,8 @@ public:
     Student(int code_, string name_): code(code_), name(std::move(name_)) {}
     int getCode() const;
     string getName() const;
-    void addClass(UcClass& class_, string lectureCode_);
+    void addClass(UcClass class_, string lectureCode_);
+    void removeClass(UcClass& class_,Lecture lecture_);
     void printClasses();
     vector<UcClass> getClasses() const;
     bool operator<(const Student& s) const;

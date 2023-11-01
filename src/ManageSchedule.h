@@ -20,10 +20,11 @@ class ManageSchedule{
         ManageSchedule() = default; // constructor
         void readStudentClasses(const string& path);
         void readClasses(const string& path);
-        void addNewStudent(int upcode);
+        void addNewStudent(Student rockStar);
+        void removeStudent(Student dropout);
         set<Student> getAllStudents();
         set<UcClass> getAllClasses();
-        Student getStudent(int upCode);
+        Student getStudent();
         UcClass getUc(string ucCode);
         void printSchedule(int n);                             //Listagem do horário de um aluno
         void printStudentsInClass();                           //Listagem de alunos em uma turma

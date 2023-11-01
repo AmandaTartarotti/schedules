@@ -40,6 +40,10 @@ void Lecture::incrementNumberStudents() {
     numberStudents += 1;
 }
 
+void Lecture::decreaseNumberStudents() {
+    numberStudents -= 1;
+}
+
 string Lecture::getLectureCode() const{
     return lecturecode;
 }
@@ -75,4 +79,8 @@ bool Lecture::operator<(const Lecture &lecture) const {
             return std::distance(std::begin(days), it1) < std::distance(std::begin(days), it2);
         }
     }
+}
+
+bool Lecture::operator==(const Lecture& otherLecture) const{
+    return getLectureCode() == otherLecture.getLectureCode();
 }

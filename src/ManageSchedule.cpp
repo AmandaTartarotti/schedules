@@ -75,6 +75,7 @@ void ManageSchedule::readStudentClasses(const string& path) {
         getline(iss, lectureCode, ',');
 
         int code = stoi(studentCode);
+        string leicCode = lectureCode;
         UcClass class_(ucCode);
         Student student(code, name);
 
@@ -87,16 +88,19 @@ void ManageSchedule::readStudentClasses(const string& path) {
                 modifiedClass.getLectureAndIncrement(lectureCode);      // add quantidade de estudante a lecture que está no vetor<Lecture> de class_
                 modifiedClass.addStudent(student, lectureCode);       // add estudante ao vetor<Student> de class_
                 classes.insert(modifiedClass);
+
+                if (studentVec.empty() or studentVec.back().getCode() != code) {    //Adicionar alunos a um vetor com todos os alunos
+                    student.addClass(modifiedClass, leicCode);
+                    studentVec.push_back(student);
+                } else {
+                    studentVec.back().addClass(modifiedClass, leicCode);
+                }
+
             } else
                 cout << "The student is enrolled in a class that does not exist!" << endl;
             }
 
-            if (studentVec.empty() or studentVec.back().getCode() != code) {    //Adicionar alunos a um vetor com todos os alunos
-                student.addClass(class_, lectureCode);
-                studentVec.push_back(student);
-            } else {
-                studentVec.back().addClass(class_, lectureCode);
-            }
+
     }
     students = set<Student>(studentVec.begin(), studentVec.end()); //Set com todos os alunos ordenados por número
 }
@@ -115,9 +119,12 @@ set<UcClass> ManageSchedule::getAllClasses() {
     return classes;
 }
 
-Student ManageSchedule::getStudent(int upCode){
+Student ManageSchedule::getStudent(){
+    int numUp;
+    cout << "Please, enter the student's up number" << endl;
+    cin >> numUp;
     for (auto &element : this->students){
-            if (element.getCode() == upCode){
+            if (element.getCode() == numUp){
                 cout << "We are talking about " << element.getName() << "!" << endl;
                 return element;
             }
@@ -135,8 +142,7 @@ UcClass ManageSchedule::getUc(string ucCode){
 }
 
 
-void ManageSchedule::addNewStudent(int upCode){
-        Student rockStar = getStudent(upCode);
+void ManageSchedule::addNewStudent(Student rockStar){
         vector<Lecture> allLectures = rockStar.getLectures();
         if (allLectures.size() < 7){                                    // check how many lectures the student is enrolled
             string ucCode;
@@ -147,6 +153,21 @@ void ManageSchedule::addNewStudent(int upCode){
         } else {
             cout << "Ops! This student is already registered in 7 UCs";
         }
+}
+
+void ManageSchedule::removeStudent(Student dropout){
+    string ucCode;
+    cout << "Now, please enter the UC code: " << endl;
+    cin >> ucCode;
+    UcClass uc = getUc(ucCode);
+    string lectureCode;
+    cout << "Nice! Please enter the Lecture code the student is enrolled in: " << endl;
+    cin >> lectureCode;
+    if (!uc.findLecture(lectureCode)){
+        cout << "Hey, this is not a valid Lecture for this UC! Please, try again.";
+    } else{
+        uc.removeStudent(dropout,lectureCode);
+    }
 }
 
     /* TEM QUE REVISAR
