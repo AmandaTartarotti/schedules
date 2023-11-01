@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Lecture.h"
 using namespace std;
 
@@ -8,6 +9,27 @@ Lecture::Lecture(const string &lecturecode_, const std::string &day_, float star
     duration = duration_;
     type = type_;
     numberStudents = 0;
+}
+
+bool Lecture::overlapsWith(const Lecture &otherLecture) const {
+    // cout << day << " " << otherLecture.day << endl;
+    if (day == otherLecture.day) {
+        if (type == "T" && (otherLecture.type == "TP" || otherLecture.type == "T" || otherLecture.type == "PL")) {
+            return false; // aulas não se sobrepõem para o tipo "T"
+        } else if (type == "TP" && (otherLecture.type == "T")) {
+            return false; // aulas não se sobrepõem para o tipo "T"
+        } else {
+            //cout << "entrei";
+            //cout << startHour << " " << otherLecture.startHour << endl;
+            // Verifica se a aula começa antes da outra terminar e termina após a outra começar
+            if ((startHour == otherLecture.startHour) || (startHour < (otherLecture.startHour + otherLecture.duration) && (startHour + duration) > otherLecture.startHour)
+             || (otherLecture.startHour < (startHour + duration) && (otherLecture.startHour + otherLecture.duration > startHour))){
+                //cout << "sobrepos" << endl;
+                return true; // Palestras se sobrepõem
+            }
+        }
+    }
+    return false; // Palestras não se sobrepõem
 }
 
 int Lecture::getNumberStudents() {

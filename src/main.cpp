@@ -1,5 +1,7 @@
 
 #include <iostream>
+#include <queue>
+#include <string>
 #include <iterator>
 #include <cctype>
 #include <vector>
@@ -105,6 +107,8 @@ int main(){
     //manageschedule.getAllClasses();
     //manageschedule.getAllStudents();
 
+
+    // /*
     bool state = true;
     int menuId = 0;
     printMenu();
@@ -132,7 +136,7 @@ int main(){
             cout << "Invalid option. Exiting." << endl;
             break;
     }
-}
+} // **/
 
 return 0;
 }

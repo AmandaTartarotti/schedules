@@ -5,6 +5,9 @@
 
 #include <string>
 #include <set>
+#include <vector>
+#include <queue>
+#include <any>
 #include "Student.h"
 #include "UcClass.h"
 using namespace std;
@@ -20,7 +23,7 @@ class ManageSchedule{
         void addNewStudent(int upcode);
         set<Student> getAllStudents();
         set<UcClass> getAllClasses();
-        Student getStudent(int upcode);
+        Student getStudent(int upCode);
         UcClass getUc(string ucCode);
         void printSchedule(int n);                             //Listagem do horário de um aluno
         void printStudentsInClass();                           //Listagem de alunos em uma turma

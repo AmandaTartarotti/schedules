@@ -21,6 +21,7 @@ public:
     float getStartHour() const;
     float getDuration() const;
     bool operator<(const Lecture &lecture) const;
+    bool overlapsWith(const Lecture &otherLecture) const;
 };
 
 #endif //SCHEDULES_LECTURE_H

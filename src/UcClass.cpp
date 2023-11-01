@@ -65,10 +65,11 @@ bool UcClass::operator==(UcClass s) {
 
 void UcClass::addStudent(Student &stud, string lectureCode_) {
     studentClass.insert(stud);
+    /* stud.addClass(*this);
     for (Lecture &element: this->lectureClass) {
         if (element.getLectureCode() == lectureCode_)
             stud.addLecture(element);
-    }
+    }**/
 }
 
 set<Student> UcClass::getStudents() {
@@ -79,16 +80,20 @@ void UcClass::newStudent(Student &student) {
     if (!findStudent(student.getCode())){
         bool vacancyFound = false;
         for (Lecture &element : lectureClass){                      // check the first lecture with a vacancy
-            if (element.getNumberStudents() < 27){                 // check the first element where there is a place
-                element.incrementNumberStudents();
-                student.addLecture(element);
-                cout << "Sucess! The student is now enrolled in this UC at Lecture " << element.getLectureCode() << endl;
-                vacancyFound = true;
-                break;
+            // cout << element.getLectureCode() << " ";
+            if (element.getNumberStudents() < 27){
+                //cout << "Lugar tem" << endl;
+                if (student.checkAvabialy(element)){                 // check the first element where there is a place
+                    element.incrementNumberStudents();
+                    cout << "Sucess! The student is now enrolled in this UC at Lecture " << element.getLectureCode() << endl;
+                    vacancyFound = true;
+                    student.addClass(*this, element.getLectureCode());
+                    break;
+                }
             }
         }
         if (!vacancyFound) {
-            cout << "Sorry! There is no available vacancy in this UC." << endl;
+            cout << "Sorry! There is no available vacancy in this UC that suits the student's schedule." << endl;
         }
     } else {
         cout << "Hey, this student is already enrolled!" << endl;

@@ -20,17 +20,17 @@ private:
     vector<Lecture> lectures;
 public:
     Student() = default;
-    void addLecture(Lecture lecture_);
     vector<Lecture> getLectures() const;
     Student(int code_): code(code_) {}
     Student(int code_, string name_): code(code_), name(std::move(name_)) {}
     int getCode() const;
     string getName() const;
-    void addClass(const UcClass& class_);
+    void addClass(UcClass& class_, string lectureCode_);
     void printClasses();
     vector<UcClass> getClasses() const;
     bool operator<(const Student& s) const;
     bool operator>(const Student& s) const;
+    bool checkAvabialy(Lecture otherLecture) const;
 };
 
 

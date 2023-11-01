@@ -76,44 +76,48 @@ void ManageSchedule::readStudentClasses(const string& path) {
 
         int code = stoi(studentCode);
         UcClass class_(ucCode);
-        Student student = Student(code, name);
-
+        Student student(code, name);
 
         auto pos = classes.find(class_);                 // Incrementar tamanho da turma
         if (pos != classes.end()) {                                        // Se encontrar um UC existente
             if (pos->findLecture(lectureCode)) {               // E encontrar a lecture nessa UC
-                UcClass temp = *pos;
+                UcClass modifiedClass = *pos;
                 classes.erase(pos);
-                temp.incrementSize();                                      // incrementa a quantidade de estudantes da uc
-                temp.addStudent(student, lectureCode);                             // add estudante ao vetor<Student> de class_
-                temp.getLectureAndIncrement(lectureCode);        // add quantidade de estudante a lecture que está no vetor<Lecture> de class_
-                classes.insert(temp);
-                students.insert(student);                              //add o estudente ao set students
-            } else {
+                modifiedClass.incrementSize();                                      // incrementa a quantidade de estudantes da uc
+                modifiedClass.getLectureAndIncrement(lectureCode);      // add quantidade de estudante a lecture que está no vetor<Lecture> de class_
+                modifiedClass.addStudent(student, lectureCode);       // add estudante ao vetor<Student> de class_
+                classes.insert(modifiedClass);
+            } else
                 cout << "The student is enrolled in a class that does not exist!" << endl;
             }
-        }
-    }
-}
 
+            if (studentVec.empty() or studentVec.back().getCode() != code) {    //Adicionar alunos a um vetor com todos os alunos
+                student.addClass(class_, lectureCode);
+                studentVec.push_back(student);
+            } else {
+                studentVec.back().addClass(class_, lectureCode);
+            }
+    }
+    students = set<Student>(studentVec.begin(), studentVec.end()); //Set com todos os alunos ordenados por número
+}
 
 set<Student> ManageSchedule::getAllStudents() {
     return students;
 }
 
 set<UcClass> ManageSchedule::getAllClasses() {
-        for (auto element : classes){
-           vector<Lecture> teste = element.getLecture();
-           for (auto element_ : teste){
-               cout << element_.getLectureCode() << " " << element_.getNumberStudents() << endl;
-           }
-        }
-        return classes;
+    for (auto element : classes){
+       vector<Lecture> teste = element.getLecture();
+       for (auto element_ : teste){
+           cout << element.getUcCode() << endl << element_.getLectureCode() << " " << element_.getNumberStudents() << endl;
+       }
+    }
+    return classes;
 }
 
-Student ManageSchedule::getStudent(int upcode){
+Student ManageSchedule::getStudent(int upCode){
     for (auto &element : this->students){
-            if (element.getCode() == upcode){
+            if (element.getCode() == upCode){
                 cout << "We are talking about " << element.getName() << "!" << endl;
                 return element;
             }
@@ -130,8 +134,9 @@ UcClass ManageSchedule::getUc(string ucCode){
     throw std::runtime_error("Bad news, no UC was not found! Are you sure this is the right code?");
 }
 
-void ManageSchedule::addNewStudent(int upcode){
-        Student rockStar = getStudent(upcode);
+
+void ManageSchedule::addNewStudent(int upCode){
+        Student rockStar = getStudent(upCode);
         vector<Lecture> allLectures = rockStar.getLectures();
         if (allLectures.size() < 7){                                    // check how many lectures the student is enrolled
             string ucCode;
