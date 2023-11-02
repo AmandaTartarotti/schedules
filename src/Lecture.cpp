@@ -2,7 +2,8 @@
 #include "Lecture.h"
 using namespace std;
 
-Lecture::Lecture(const string &lecturecode_, const std::string &day_, float startHour_, float duration_, const std::string &type_) {
+Lecture::Lecture(const string &ucCode_, const string &lecturecode_, const std::string &day_, float startHour_, float duration_, const std::string &type_) {
+    ucCode = ucCode_;
     lecturecode = lecturecode_;
     day = day_;
     startHour = startHour_;
@@ -46,6 +47,10 @@ void Lecture::decreaseNumberStudents() {
 
 string Lecture::getLectureCode() const{
     return lecturecode;
+}
+
+string Lecture::getUCCode() const{
+    return ucCode;
 }
 
 string Lecture::getDay() const {

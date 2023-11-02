@@ -33,7 +33,7 @@ bool UcClass::findStudent(int upCode) const {
     return false;
 }
 
-string UcClass::getUcCode() {
+string UcClass::getUcCode() const{
     return uccode;
 }
 
@@ -53,10 +53,21 @@ bool UcClass::operator<(UcClass s) const {
     return uccode < s.getUcCode();
 }
 
-void UcClass::addLecture(Lecture lecture) {
-    lectureClass.push_back(lecture);
-    //cout << lectureClass.size() << " ";
+void UcClass::addLecture(Lecture lecture_) {
+    /* bool lectureExist = false;
+    for (Lecture &element : this->lectureClass){
+        if (element.getLectureCode() == lecture_.getLectureCode()) {
+            element.incrementNumberStudents();
+            element.addLeics(lecture_);
+            lectureExist = true;
+        }
+    }
+
+    if (!lectureExist )                             // Essa é uma nova lecture
+        */
+    lectureClass.push_back(lecture_);
 }
+
 
 vector<Lecture> UcClass::getLecture() {
     return lectureClass;
@@ -86,16 +97,14 @@ string UcClass::newStudent(Student &student) {
     if (!findStudent(student.getCode())){
         bool vacancyFound = false;
         for (Lecture &element : lectureClass){                      // check the first lecture with a vacancy
-            // cout << element.getLectureCode() << " ";
             if (element.getNumberStudents() < 27){
-                //cout << "Lugar tem" << endl;
-                if (student.checkAvabialy(element)){                 // check the first element where there is a place
+                if (student.checkAvabialy(this->getUcCode(), element)){                 // check the first element where there is a place
                     element.incrementNumberStudents();
-                    cout << "Sucess! The student is now enrolled in this UC at Lecture " << element.getLectureCode() << endl;
+                    this->incrementSize();
+                    studentClass.insert(student);
                     vacancyFound = true;
                     student.addClass(*this, element.getLectureCode());
-                    studentClass.insert(student);
-                    this->incrementSize();
+                    cout << "Sucess! The student is now enrolled in this UC at Lecture " << element.getLectureCode() << endl;
                     string recordSting("The student " + upCode_ + " was successfully enrolled in the Uc " + this->getUcCode() + " and lecture " + element.getLectureCode() + ".");
                     return recordSting;
                     break;
@@ -114,22 +123,28 @@ string UcClass::newStudent(Student &student) {
     }
 }
 
-void UcClass::removeStudent(Student &dropout, string lectureCode){
+void UcClass::removeStudent(Student &dropout) {
 
-    for (Lecture &element : lectureClass){
-        if (element.getLectureCode() == lectureCode){
-            dropout.removeClass(*this, element);    // remove Lecture and Uc from Student Object
-            element.decreaseNumberStudents();                 //remove student from Lecture object counting
-            cout << "The student is been removed.. ";
+    if (findStudent(dropout.getCode())) {
+        string lectureCode = dropout.removeClass(*this);
+        cout << "The student is been removed.. ";
+        for (Lecture &element: lectureClass) {
+            if (element.getLectureCode() == lectureCode) {
+                element.decreaseNumberStudents();                 //remove student from Lecture object counting
+            }
         }
-    }
 
-    for (auto &element : studentClass){
-        if (element.getCode() == dropout.getCode()){
-            studentClass.erase(element);                // remove student from UC
-            this->decreaseSize();                          // remove student from UC counting
-            cout << "Done, the student is now removed from this UC!" << endl;
+        for (auto &element: studentClass) {
+            if (element.getCode() == dropout.getCode()) {
+                studentClass.erase(element);                // remove student from UC
+                this->decreaseSize();                          // remove student from UC counting
+                cout << "Done, the student is now removed from this UC!" << endl;
+            }
         }
+
+
+    } else {
+        cout << "Hey, we just checked and the student is not enrolled in this UC!" << endl;
     }
 }
 

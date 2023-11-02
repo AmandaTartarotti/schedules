@@ -112,6 +112,7 @@ int main(){
     bool state = true;
     int menuId = 0;
     Student rockStar;
+    string code;
     printMenu();
 
     while(state) {
@@ -124,10 +125,13 @@ int main(){
                 printStudentsInClass(manageschedule.getAllClasses());
                 break;
             case 3:
-                cout << "not yet here";
+                rockStar = manageschedule.getStudent();
+                printScheduleStudent(rockStar);
                 break;
             case 4:
-                cout << "not yet here";
+                cout << "Please, enter the UC code (L.EICXXX):" << endl;
+                cin >> code;
+                printScheduleClass(manageschedule.getUc(code));
                 break;
             case 5:
                 rockStar = manageschedule.getStudent();

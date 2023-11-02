@@ -36,16 +36,14 @@ void ManageSchedule::readClasses(const string& path) {
         float duration = stof(dur);
 
         UcClass class_(ucCode);
-        Lecture lecture(lectureCode, weekday, startHour, duration, type);
+        Lecture lecture(ucCode, lectureCode, weekday, startHour, duration, type);
 
         auto pos = classes.find(class_);
         if (pos != classes.end()) {                                        // Se encontrar um UC existente
-            if (!pos->findLecture(lectureCode)) {             // E não encontrar a lecture nessa UC
-                UcClass temp = *pos;
-                classes.erase(pos);
-                temp.addLecture(lecture);                                // adiciona essa turma
-                classes.insert(temp);
-            }
+            UcClass temp = *pos;
+            classes.erase(pos);
+            temp.addLecture(lecture);                                       // adiciona essa turma
+            classes.insert(temp);
         } else {
             class_.addLecture(lecture);
             classes.insert(class_);                                     // adiciona a uc + lecture
@@ -98,8 +96,7 @@ void ManageSchedule::readStudentClasses(const string& path) {
 
             } else
                 cout << "The student is enrolled in a class that does not exist!" << endl;
-            }
-
+        }
 
     }
     students = set<Student>(studentVec.begin(), studentVec.end()); //Set com todos os alunos ordenados por número
@@ -145,10 +142,10 @@ UcClass ManageSchedule::getUc(string ucCode){
 void ManageSchedule::addNewStudent(Student rockStar){
         int upCode = rockStar.getCode();
         string upCode_ = to_string(upCode);
-        vector<Lecture> allLectures = rockStar.getLectures();
-        if (allLectures.size() < 7){                                    // check how many lectures the student is enrolled
+        vector<map<UcClass,string>> uc = rockStar.getClasses();
+        if (uc.size() < 7){                                    // check how many lectures the student is enrolled
             string ucCode;
-            cout << "Now, please enter the UC code the student wants to join: " << endl;
+            cout << "Now, please enter the UC code the student wants to join (L.EICXXX): " << endl;
             cin >> ucCode;
             UcClass uc = getUc(ucCode);
             string recordString = uc.newStudent(rockStar);
@@ -163,17 +160,10 @@ void ManageSchedule::removeStudent(Student dropout){
     cout << "Now, please enter the UC code the student wants to leave: " << endl;
     cin >> ucCode;
     UcClass uc = getUc(ucCode);
-    string lectureCode;
-    cout << "Nice! Please enter the Lecture code the student is enrolled in: " << endl;
-    cin >> lectureCode;
-    if (!uc.findLecture(lectureCode)){
-        cout << "Hey, this is not a valid Lecture for this UC! Please, try again.";
-    } else{
-        uc.removeStudent(dropout,lectureCode);
-        int upCode = dropout.getCode();
-        string upCode_ = to_string(upCode);
-        record.push_back("The Student " + upCode_ + " was successfully removed from UC " + ucCode + " and lecture " + lectureCode +".");
-    }
+    uc.removeStudent(dropout);
+    int upCode = dropout.getCode();
+    string upCode_ = to_string(upCode);
+    record.push_back("The Student " + upCode_ + " was successfully removed from UC " + ucCode + ".");
 }
 
 void ManageSchedule::switchUC(Student switched){
@@ -186,34 +176,5 @@ void ManageSchedule::accessRecord(){
         std::cout << element << std::endl;
     }
 }
-
-    /* TEM QUE REVISAR
-void ManageSchedule::printSchedule(int n) {
-    Student student(n);
-    auto it = students.find(student);
-    if (it == students.end()) {
-        cout << "Estudante não encontrado.\n";
-        return;
-    }
-    student = *it;
-
-    //Criar set ordenado por Dia/Hora
-    set<pair<Lecture, UcClass>> schedule;
-    for (UcClass class_ : student.getClasses()) {
-        for (const Lecture& lecture : class_.getLecture()) {
-            pair<Lecture, UcClass> temp = make_pair(lecture, class_);
-            schedule.insert(temp);
-        }
-    }
-
-    //Cout do horario
-    cout << "Horario de " << student.getName() << " (" << student.getCode() << ")\n";
-    cout << "\nUcCode-----Class----Lecture\n";
-    for (pair<Lecture, UcClass> item : schedule) {
-        cout << item.second.getUcCode() << " - " << item.second.getClassNum() << ": ";
-        cout << item.first.getDay() << ", " << item.first.getStartHour() << ", " << item.first.getDuration() << ", " << item.first.getType() << "\n";
-    }
-}
-     */
 
 

@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <set>
+#include <map>
 #include <utility>
 #include <vector>
 #include "UcClass.h"
@@ -16,8 +17,8 @@ class Student {
 private:
     int code;
     string name;
-    vector<UcClass> classes;
-    vector<Lecture> lectures;
+    vector<map<UcClass,string>> classes;            // guarda o objeto uc e a lectureCode
+    vector<Lecture> lectures;                       // guarda os obejtos lectures e a UCcode
 public:
     Student() = default;
     vector<Lecture> getLectures() const;
@@ -26,12 +27,12 @@ public:
     int getCode() const;
     string getName() const;
     void addClass(UcClass class_, string lectureCode_);
-    void removeClass(UcClass& class_,Lecture lecture_);
+    string removeClass(UcClass& class_);
     void printClasses();
-    vector<UcClass> getClasses() const;
+    vector<map<UcClass,string>> getClasses() const;
     bool operator<(const Student& s) const;
     bool operator>(const Student& s) const;
-    bool checkAvabialy(Lecture otherLecture) const;
+    bool checkAvabialy(string UCcode, Lecture otherLecture) const;
 };
 
 

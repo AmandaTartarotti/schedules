@@ -19,7 +19,7 @@ private:
     set<Student> studentClass;
 public:
     UcClass(const string& uccode_);
-    string getUcCode();
+    string getUcCode() const;
     bool findLecture(string lectureCode_) const;
     void getLectureAndIncrement(string lectureCode_);
     int getSize();
@@ -33,7 +33,7 @@ public:
     void addStudent(Student &stud, string lectureCode_);
     string newStudent(Student &student);
     bool findStudent(int upCode) const;
-    void removeStudent(Student &dropout, string lectureCode_);
+    void removeStudent(Student &dropout);
 };
 
 #endif //SCHEDULES_UCCLASS_H

@@ -8,7 +8,6 @@ void printMenu(){
     //cout << "0 - Check menu options" << endl;
     cout << "1 - Check all students names" << endl;
     cout << "2 - Consult the students within a given class" << endl;
-    // AVISO: está em manageSchedule, tem que revisar e passar para o menu
     cout << "3 - Consult the schedule of a given student" << endl;
     // AVISO: tem que criar ainda
     cout << "4 - Consult the schedule of a given class" << endl;
@@ -72,9 +71,9 @@ void printAllStudents(const set<Student>& student)  {
 
 void printStudentsInClass(const set<UcClass>& classes) {
     string ucCode, classCode;
-    cout << "Introduza o codigo da UC (L.EICXXX)\n";
+    cout << "Enter the UC code (L.EICXXX): \n";
     cin >> ucCode; cout << "\n";
-    cout << "Introduza o codigo da turma (XLEICXX)\n";
+    cout << "Enter the class code (XLEICXX): \n";
     cin >> classCode; cout << "\n";
     UcClass class_(ucCode);
     auto it = classes.find(class_);
@@ -84,5 +83,55 @@ void printStudentsInClass(const set<UcClass>& classes) {
         return;
     } else{
         cout << "Oh no! It was not possible to find the class.. Please try again.\n";
+    }
+}
+
+
+void printScheduleStudent(Student student) {
+
+    //Criar set ordenado por Dia/Hora
+    set<Lecture> schedule;
+
+    vector<Lecture> leicsStudent = student.getLectures();
+    //vector<UcClass> ucsStudent = student.getClasses();
+
+    for (int i = 0; i < leicsStudent.size(); i++){
+        schedule.insert(leicsStudent[i]);
+    }
+
+    // Cout do horario
+    cout << "Horario de " << student.getName() << " (" << student.getCode() << ")\n";
+    cout << "\nUcCode    Lecture   Day        StartHour   Duration   Type\n";
+
+    for ( auto item : schedule) {
+        cout << left << setw(9) << item.getUCCode() << " ";
+        cout << left << setw(9) << item.getLectureCode() << " ";
+        cout << left << setw(10) << item.getDay() << " ";
+        cout << fixed << setprecision(1) << setw(12) << item.getStartHour() << " ";
+        cout << setw(10) << item.getDuration() << " ";
+        cout << setw(6) << item.getType() << "\n";
+    }
+}
+
+void printScheduleClass(UcClass class_){
+    //Criar set ordenado por Dia/Hora
+    set<Lecture> scheduleClass;
+    cout << class_.getLecture().size() << endl;
+    for (auto element : class_.getLecture()){
+        scheduleClass.insert(element);
+    }
+
+    cout << scheduleClass.size() << endl;
+
+    // Cout do horario
+    cout << "Horario de " << class_.getUcCode() << "\n";
+    cout << "\nLecture   Day        StartHour   Duration   Type\n";
+
+    for (auto item : scheduleClass) {
+        cout << left << setw(9) << item.getLectureCode() << " ";
+        cout << left << setw(10) << item.getDay() << " ";
+        cout << fixed << setprecision(1) << setw(12) << item.getStartHour() << " ";
+        cout << setw(10) << item.getDuration() << " ";
+        cout << setw(6) << item.getType() << "\n";
     }
 }

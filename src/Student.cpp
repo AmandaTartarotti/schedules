@@ -14,16 +14,10 @@ vector<Lecture> Student::getLectures() const{
     return lectures;
 }
 
-bool Student::checkAvabialy(Lecture otherLecture) const{
-    //cout << "Estudante inscrito em:" << endl;
-    //cout << classes.size();
-    for (auto element : classes){
-        //cout << element.getUcCode();
-    }
+bool Student::checkAvabialy(string ucCode, Lecture otherLecture) const{
+
     for (auto element : lectures){
-        //cout << " comparando com " << element.getLectureCode() << " ";
-        if (element.overlapsWith(otherLecture)){
-            //cout << "vish nn da" << endl;
+        if(element.overlapsWith(otherLecture)){
             return false;
         }
     }
@@ -39,35 +33,51 @@ string Student::getName() const {
 }
 
 void Student::addClass(UcClass class_, string lectureCode_) {
-    classes.push_back(class_);
+    classes.push_back({{class_, lectureCode_}});
     for (Lecture &element : class_.getLecture()) {
         if (element.getLectureCode() == lectureCode_)
             lectures.push_back(element);
     }
 }
 
-void Student::removeClass(UcClass& class_,Lecture lecture_){
+string Student::removeClass(UcClass& class_){
+    string lectureCode_;
 
-    auto classIterator = std::find(classes.begin(), classes.end(), class_);
-    if (classIterator != classes.end()) {
-        classes.erase(classIterator);
-        auto lectureIterator = std::find(lectures.begin(), lectures.end(),lecture_ );
-        if (lectureIterator != lectures.end()) {
-            lectures.erase(lectureIterator);
-
+    if (class_.findStudent(this->getCode())) {
+        for (auto i: classes) {
+            for (auto it = i.begin(); it != i.end();) {
+                if (it->first.getUcCode() == class_.getUcCode()) {
+                    it->second = lectureCode_;
+                    it = i.erase(it);
+                } else {
+                    it++;
+                }
+            }
         }
-    }else{
+
+        for (auto removeLeic = lectures.begin(); removeLeic != lectures.end();){
+            if (removeLeic->getLectureCode() == lectureCode_ && class_.getUcCode() == removeLeic->getUCCode()){
+                removeLeic = lectures.erase(removeLeic);
+            }else{
+                removeLeic++;
+            }
+        }
+
+    }
+    else {
         cout << "Hey, this student was not enrolled in this UC!" << endl;
     }
+
+    return lectureCode_;
 }
 
-
+/* NÃO TA A SER UTILIZADO
 void Student::printClasses() {
     for (UcClass class_ : classes) {
         cout << class_.getUcCode() << endl;
     }
-}
+}*/
 
-vector<UcClass> Student::getClasses() const {
+vector<map<UcClass,string>> Student::getClasses() const {
     return classes;
 }
