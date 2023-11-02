@@ -14,6 +14,8 @@ void printMenu(){
     cout << "4 - Consult the schedule of a given class" << endl;
     cout << "5 - Add Student to a new UC" << endl;
     cout << "6 - Remove Student from a UC" << endl;
+    cout << "7 - Switch Student from a UC to another" << endl;
+    cout << "8 - Access record of all changes made to the system" << endl;
     cout << "10 - Exit" << endl;
 }
 

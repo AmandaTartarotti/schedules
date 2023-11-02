@@ -31,7 +31,7 @@ public:
     vector<Lecture> getLecture();
     set<Student> getStudents();
     void addStudent(Student &stud, string lectureCode_);
-    void newStudent(Student &student);
+    string newStudent(Student &student);
     bool findStudent(int upCode) const;
     void removeStudent(Student &dropout, string lectureCode_);
 };

@@ -137,6 +137,13 @@ int main(){
                 rockStar = manageschedule.getStudent();
                 manageschedule.removeStudent(rockStar);
                 break;
+            case 7:
+                rockStar = manageschedule.getStudent();
+                manageschedule.switchUC(rockStar);
+                break;
+            case 8:
+                manageschedule.accessRecord();
+                break;
             case 10:
                 cout << "Goodbye!";
                 state = false;

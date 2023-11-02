@@ -80,7 +80,9 @@ set<Student> UcClass::getStudents() {
     return studentClass;
 }
 
-void UcClass::newStudent(Student &student) {
+string UcClass::newStudent(Student &student) {
+    int upCode = student.getCode();
+    string upCode_ = to_string(upCode);
     if (!findStudent(student.getCode())){
         bool vacancyFound = false;
         for (Lecture &element : lectureClass){                      // check the first lecture with a vacancy
@@ -94,15 +96,21 @@ void UcClass::newStudent(Student &student) {
                     student.addClass(*this, element.getLectureCode());
                     studentClass.insert(student);
                     this->incrementSize();
+                    string recordSting("The student " + upCode_ + " was successfully enrolled in the Uc " + this->getUcCode() + " and lecture " + element.getLectureCode() + ".");
+                    return recordSting;
                     break;
                 }
             }
         }
         if (!vacancyFound) {
-            cout << "Sorry! There is no available vacancy in this UC that suits the student's schedule." << endl;
+            cout << "Sorry! There is no available vacancy in" << this->getUcCode() << "that suits the student's schedule." << endl;
+            string recordString("The student " + upCode_ + " could not be enrolled in the UC " + this->getUcCode() + " because there was no available vacancy that suits the student's schedule.");
+            return recordString;
         }
     } else {
         cout << "Hey, this student is already enrolled!" << endl;
+        string recordString("The student " + upCode_ + " was already enrolled in the UC " + this->getUcCode() + ". It is not possible to enroll a student twice!");
+        return recordString;
     }
 }
 
@@ -120,7 +128,7 @@ void UcClass::removeStudent(Student &dropout, string lectureCode){
         if (element.getCode() == dropout.getCode()){
             studentClass.erase(element);                // remove student from UC
             this->decreaseSize();                          // remove student from UC counting
-            cout << "Done, the student is now removed from this UC!";
+            cout << "Done, the student is now removed from this UC!" << endl;
         }
     }
 }

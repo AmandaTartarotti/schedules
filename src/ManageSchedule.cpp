@@ -143,13 +143,16 @@ UcClass ManageSchedule::getUc(string ucCode){
 
 
 void ManageSchedule::addNewStudent(Student rockStar){
+        int upCode = rockStar.getCode();
+        string upCode_ = to_string(upCode);
         vector<Lecture> allLectures = rockStar.getLectures();
         if (allLectures.size() < 7){                                    // check how many lectures the student is enrolled
             string ucCode;
-            cout << "Now, please enter the UC code" << endl;
+            cout << "Now, please enter the UC code the student wants to join: " << endl;
             cin >> ucCode;
             UcClass uc = getUc(ucCode);
-            uc.newStudent(rockStar);
+            string recordString = uc.newStudent(rockStar);
+            record.push_back(recordString);
         } else {
             cout << "Ops! This student is already registered in 7 UCs";
         }
@@ -157,7 +160,7 @@ void ManageSchedule::addNewStudent(Student rockStar){
 
 void ManageSchedule::removeStudent(Student dropout){
     string ucCode;
-    cout << "Now, please enter the UC code: " << endl;
+    cout << "Now, please enter the UC code the student wants to leave: " << endl;
     cin >> ucCode;
     UcClass uc = getUc(ucCode);
     string lectureCode;
@@ -167,6 +170,20 @@ void ManageSchedule::removeStudent(Student dropout){
         cout << "Hey, this is not a valid Lecture for this UC! Please, try again.";
     } else{
         uc.removeStudent(dropout,lectureCode);
+        int upCode = dropout.getCode();
+        string upCode_ = to_string(upCode);
+        record.push_back("The Student " + upCode_ + " was successfully removed from UC " + ucCode + " and lecture " + lectureCode +".");
+    }
+}
+
+void ManageSchedule::switchUC(Student switched){
+    removeStudent(switched);
+    addNewStudent(switched);
+}
+
+void ManageSchedule::accessRecord(){
+    for (const std::string& element : record) {
+        std::cout << element << std::endl;
     }
 }
 
