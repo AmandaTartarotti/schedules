@@ -165,7 +165,7 @@ void ManageSchedule::addNewStudent(Student &rockStar){
                     classes.insert(temp);
                     students.insert(studTemp);
 
-                    record.push_back(recordString);
+                    record.push(recordString);
                 }
             }
         } else {
@@ -197,7 +197,7 @@ void ManageSchedule::removeStudent(Student &dropout){
 
             int upCode = studTemp.getCode();
             string upCode_ = to_string(upCode);
-            record.push_back("The Student " + upCode_ + " was successfully removed from UC " + ucCode + ".");
+            record.push("The Student " + upCode_ + " was successfully removed from UC " + ucCode + ".");
 
 
         }
@@ -210,8 +210,10 @@ void ManageSchedule::switchUC(Student &switched){
 }
 
 void ManageSchedule::accessRecord(){
-    for (const std::string& element : record) {
-        std::cout << element << std::endl;
+    while(!record.empty()) {
+        string record_ = record.top();
+        std::cout << record_ << std::endl;
+        record.pop();
     }
 }
 

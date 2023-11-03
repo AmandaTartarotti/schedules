@@ -10,12 +10,11 @@ bool Student::operator>(const Student &s) const {
     return code > s.getCode();
 }
 
-vector<Lecture> Student::getLectures() const{
+list<Lecture> Student::getLectures() const{
     return lectures;
 }
 
 bool Student::checkAvabialy(Lecture otherLecture) const{
-
     for (auto element : lectures){
         if(element.overlapsWith(otherLecture)){
             return false;

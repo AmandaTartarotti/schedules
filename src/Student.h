@@ -6,7 +6,7 @@
 #include <string>
 #include <iostream>
 #include <set>
-#include <map>
+#include <list>
 #include <utility>
 #include <vector>
 #include "UcClass.h"
@@ -18,10 +18,10 @@ private:
     int code;
     string name;
     int numUC;
-    vector<Lecture> lectures;                       // guarda os obejtos lectures e a UCcode
+    list<Lecture> lectures;                       // guarda os obejtos lectures e a UCcode
 public:
     Student() = default;
-    vector<Lecture> getLectures() const;
+    list<Lecture> getLectures() const;
     Student(int code_): code(code_) {}
     Student(int code_, string name_): code(code_), name(std::move(name_)) {}
     int getCode() const;

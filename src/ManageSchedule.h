@@ -6,7 +6,7 @@
 #include <string>
 #include <set>
 #include <vector>
-#include <list>
+#include <stack>
 #include "Student.h"
 #include "UcClass.h"
 using namespace std;
@@ -15,7 +15,7 @@ class ManageSchedule{
     private:
         set<Student> students;
         set<UcClass> classes;
-        list<string> record;
+        stack<string> record;
     public:
         ManageSchedule() = default; // constructor
         void readStudentClasses(const string& path);

@@ -92,8 +92,8 @@ void printScheduleStudent(Student student) {
     //Criar set ordenado por Dia/Hora
     set<Lecture> schedule;
 
-    for (int i = 0; i < student.getLectures().size(); i++){
-        schedule.insert(student.getLectures()[i]);
+    for (auto element : student.getLectures()){
+        schedule.insert(element);
     }
 
     // Cout do horario
