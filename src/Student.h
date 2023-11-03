@@ -17,7 +17,7 @@ class Student {
 private:
     int code;
     string name;
-    vector<map<UcClass,string>> classes;            // guarda o objeto uc e a lectureCode
+    int numUC;
     vector<Lecture> lectures;                       // guarda os obejtos lectures e a UCcode
 public:
     Student() = default;
@@ -28,11 +28,11 @@ public:
     string getName() const;
     void addClass(UcClass class_, string lectureCode_);
     string removeClass(UcClass& class_);
-    void printClasses();
-    vector<map<UcClass,string>> getClasses() const;
+    //void printClasses();
+    int getNumUc() const;
     bool operator<(const Student& s) const;
     bool operator>(const Student& s) const;
-    bool checkAvabialy(string UCcode, Lecture otherLecture) const;
+    bool checkAvabialy(Lecture otherLecture) const;
 };
 
 

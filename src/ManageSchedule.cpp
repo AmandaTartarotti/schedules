@@ -139,34 +139,72 @@ UcClass ManageSchedule::getUc(string ucCode){
 }
 
 
-void ManageSchedule::addNewStudent(Student rockStar){
+void ManageSchedule::addNewStudent(Student &rockStar){
         int upCode = rockStar.getCode();
         string upCode_ = to_string(upCode);
-        vector<map<UcClass,string>> uc = rockStar.getClasses();
-        if (uc.size() < 7){                                    // check how many lectures the student is enrolled
+        int numUC = rockStar.getNumUc();
+        if (numUC < 7){                                    // check how many lectures the student is enrolled
             string ucCode;
             cout << "Now, please enter the UC code the student wants to join (L.EICXXX): " << endl;
             cin >> ucCode;
             UcClass uc = getUc(ucCode);
-            string recordString = uc.newStudent(rockStar);
-            record.push_back(recordString);
+
+            auto pos = classes.find(uc);
+            if (pos != classes.end()) {
+
+                UcClass temp = *pos;
+                classes.erase(pos);
+
+                auto posStudent = students.find(rockStar);
+                if (posStudent != students.end()){
+
+                    Student studTemp = *posStudent;
+                    students.erase(studTemp);
+
+                    string recordString = temp.newStudent(studTemp);                                       // adiciona essa turma
+                    classes.insert(temp);
+                    students.insert(studTemp);
+
+                    record.push_back(recordString);
+                }
+            }
         } else {
             cout << "Ops! This student is already registered in 7 UCs";
         }
 }
 
-void ManageSchedule::removeStudent(Student dropout){
+void ManageSchedule::removeStudent(Student &dropout){
     string ucCode;
     cout << "Now, please enter the UC code the student wants to leave: " << endl;
     cin >> ucCode;
     UcClass uc = getUc(ucCode);
-    uc.removeStudent(dropout);
-    int upCode = dropout.getCode();
-    string upCode_ = to_string(upCode);
-    record.push_back("The Student " + upCode_ + " was successfully removed from UC " + ucCode + ".");
+
+    auto pos = classes.find(uc);
+    if (pos != classes.end()) {
+
+        UcClass temp = *pos;
+        classes.erase(pos);
+
+        auto posStudent = students.find(dropout);
+        if (posStudent != students.end()){
+
+            Student studTemp = *posStudent;
+            students.erase(studTemp);
+
+            temp.removeStudent(studTemp);                                      // adiciona essa turma
+            classes.insert(temp);
+            students.insert(studTemp);
+
+            int upCode = studTemp.getCode();
+            string upCode_ = to_string(upCode);
+            record.push_back("The Student " + upCode_ + " was successfully removed from UC " + ucCode + ".");
+
+
+        }
+    }
 }
 
-void ManageSchedule::switchUC(Student switched){
+void ManageSchedule::switchUC(Student &switched){
     removeStudent(switched);
     addNewStudent(switched);
 }

@@ -98,7 +98,7 @@ string UcClass::newStudent(Student &student) {
         bool vacancyFound = false;
         for (Lecture &element : lectureClass){                      // check the first lecture with a vacancy
             if (element.getNumberStudents() < 27){
-                if (student.checkAvabialy(this->getUcCode(), element)){                 // check the first element where there is a place
+                if (student.checkAvabialy(element)){                 // check the first element where there is a place
                     element.incrementNumberStudents();
                     this->incrementSize();
                     studentClass.insert(student);

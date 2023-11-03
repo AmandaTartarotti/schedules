@@ -14,6 +14,7 @@ void printAllStudents(const set<Student>& student);
 void printStudentsInClass(const set<UcClass>& classes);
 void printScheduleStudent(Student student);
 void printScheduleClass(UcClass class_);
+void studentsInAtLeastN_UCs(const set<Student>& student);
 
 
 #endif //SCHEDULES_MENU_H

@@ -129,7 +129,7 @@ int main(){
                 printScheduleStudent(rockStar);
                 break;
             case 4:
-                cout << "Please, enter the UC code (L.EICXXX):" << endl;
+                cout << "Please, enter the UC code: " << endl;
                 cin >> code;
                 printScheduleClass(manageschedule.getUc(code));
                 break;
@@ -147,6 +147,9 @@ int main(){
                 break;
             case 8:
                 manageschedule.accessRecord();
+                break;
+            case 9:
+                studentsInAtLeastN_UCs(manageschedule.getAllStudents());
                 break;
             case 10:
                 cout << "Goodbye!";

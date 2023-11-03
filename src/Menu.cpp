@@ -9,12 +9,12 @@ void printMenu(){
     cout << "1 - Check all students names" << endl;
     cout << "2 - Consult the students within a given class" << endl;
     cout << "3 - Consult the schedule of a given student" << endl;
-    // AVISO: tem que criar ainda
     cout << "4 - Consult the schedule of a given class" << endl;
     cout << "5 - Add Student to a new UC" << endl;
     cout << "6 - Remove Student from a UC" << endl;
     cout << "7 - Switch Student from a UC to another" << endl;
     cout << "8 - Access record of all changes made to the system" << endl;
+    cout << "9 - Consult the number of students registered in at least n UCs" << endl;
     cout << "10 - Exit" << endl;
 }
 
@@ -92,11 +92,8 @@ void printScheduleStudent(Student student) {
     //Criar set ordenado por Dia/Hora
     set<Lecture> schedule;
 
-    vector<Lecture> leicsStudent = student.getLectures();
-    //vector<UcClass> ucsStudent = student.getClasses();
-
-    for (int i = 0; i < leicsStudent.size(); i++){
-        schedule.insert(leicsStudent[i]);
+    for (int i = 0; i < student.getLectures().size(); i++){
+        schedule.insert(student.getLectures()[i]);
     }
 
     // Cout do horario
@@ -115,23 +112,30 @@ void printScheduleStudent(Student student) {
 
 void printScheduleClass(UcClass class_){
     //Criar set ordenado por Dia/Hora
-    set<Lecture> scheduleClass;
-    cout << class_.getLecture().size() << endl;
-    for (auto element : class_.getLecture()){
-        scheduleClass.insert(element);
-    }
-
-    cout << scheduleClass.size() << endl;
 
     // Cout do horario
     cout << "Horario de " << class_.getUcCode() << "\n";
     cout << "\nLecture   Day        StartHour   Duration   Type\n";
 
-    for (auto item : scheduleClass) {
+    for (auto item : class_.getLecture()) {
         cout << left << setw(9) << item.getLectureCode() << " ";
         cout << left << setw(10) << item.getDay() << " ";
         cout << fixed << setprecision(1) << setw(12) << item.getStartHour() << " ";
         cout << setw(10) << item.getDuration() << " ";
         cout << setw(6) << item.getType() << "\n";
     }
+}
+
+void studentsInAtLeastN_UCs(const set<Student>& student){
+    int num = 0;
+    int count = 0;
+    cout << "Enter the minimum number of UCs a student must be registered in: ";
+    cin >> num;
+    for (auto element : student){
+        if (element.getNumUc() > num){
+            count++;
+        }
+    }
+
+    cout << "The number of students registered in at least " << num << " UC's is " << count << "." << endl;
 }
