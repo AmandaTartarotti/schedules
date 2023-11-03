@@ -157,10 +157,14 @@ void ManageSchedule::addNewStudent(Student rockStar){
 
 void ManageSchedule::addNewClass(Student rockStar){
     string ucCode;
-    cout << "Now, please enter the UC of the class the student wants to join (L.EICXXX): " << endl;
+    cout << "Now, please enter the UC code of the class the student wants to join (L.EICXXX): " << endl;
     cin >> ucCode;
+    if (rockStar.isEnroled(ucCode)) {
+        cout << "This student already has a class in this UC" << endl;
+        return;
+    }
     string classCode;
-    cout << "Now, please enter the class code the student wants to leave: " << endl;
+    cout << "Now, please enter the code of the class the student would like to join: " << endl;
     cin >> classCode;
     UcClass uc = getUc(ucCode);
     uc.newClass(rockStar, classCode);

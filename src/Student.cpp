@@ -81,3 +81,12 @@ void Student::printClasses() {
 vector<map<UcClass,string>> Student::getClasses() const {
     return classes;
 }
+
+bool Student::isEnroled(string ucCode) const {
+    for (auto i: classes) {
+        for (auto it = i.begin(); it != i.end();) {
+            if(it->first.getUcCode() == ucCode) return true;
+        }
+    }
+    return false;
+}

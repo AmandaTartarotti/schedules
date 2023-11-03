@@ -33,6 +33,7 @@ public:
     bool operator<(const Student& s) const;
     bool operator>(const Student& s) const;
     bool checkAvabialy(string UCcode, Lecture otherLecture) const;
+    bool isEnroled(string ucCode) const;
 };
 
 
