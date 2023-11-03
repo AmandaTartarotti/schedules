@@ -155,6 +155,17 @@ void ManageSchedule::addNewStudent(Student rockStar){
         }
 }
 
+void ManageSchedule::addNewClass(Student rockStar){
+    string ucCode;
+    cout << "Now, please enter the UC of the class the student wants to join (L.EICXXX): " << endl;
+    cin >> ucCode;
+    string classCode;
+    cout << "Now, please enter the class code the student wants to leave: " << endl;
+    cin >> classCode;
+    UcClass uc = getUc(ucCode);
+    uc.newClass(rockStar, classCode);
+}
+
 void ManageSchedule::removeStudent(Student dropout){
     string ucCode;
     cout << "Now, please enter the UC code the student wants to leave: " << endl;
@@ -166,11 +177,26 @@ void ManageSchedule::removeStudent(Student dropout){
     record.push_back("The Student " + upCode_ + " was successfully removed from UC " + ucCode + ".");
 }
 
+void ManageSchedule::removeStudentClass(Student dropout) {
+    string ucCode;
+    cout << "Now, please enter the UC code of the class the student wants to leave: " << endl;
+    cin >> ucCode;
+    UcClass uc = getUc(ucCode);
+    string classCode;
+    cout << "Now, please enter the class code the student wants to leave: " << endl;
+    cin >> classCode;
+    uc.removeStudentClass(dropout, classCode);
+}
+
 void ManageSchedule::switchUC(Student switched){
     removeStudent(switched);
     addNewStudent(switched);
 }
 
+void ManageSchedule::switchClass(Student switched) {
+    removeStudentClass(switched);
+    addNewClass(switched);
+}
 void ManageSchedule::accessRecord(){
     for (const std::string& element : record) {
         std::cout << element << std::endl;

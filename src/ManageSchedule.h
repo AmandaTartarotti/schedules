@@ -23,6 +23,9 @@ class ManageSchedule{
         void addNewStudent(Student rockStar);
         void removeStudent(Student dropout);
         void switchUC(Student switched);
+        void addNewClass (Student rockStar);
+        void removeStudentClass(Student dropout);
+        void switchClass(Student switched);
         set<Student> getAllStudents();
         set<UcClass> getAllClasses();
         Student getStudent();

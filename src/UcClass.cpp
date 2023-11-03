@@ -122,6 +122,23 @@ string UcClass::newStudent(Student &student) {
         return recordString;
     }
 }
+void UcClass::newClass(Student &student, string desired){
+
+    for (Lecture &element : lectureClass){                      // check the first lecture with a vacancy
+        if(element.getLectureCode() == desired) {
+            if (element.getNumberStudents() < 27) {
+                if (student.checkAvabialy(this->getUcCode(),element)) {                 // check the first element where there is a place
+                    element.incrementNumberStudents();
+                    student.addClass(*this, element.getLectureCode());
+                    cout << "Sucess! The student is now enrolled in class " << element.getLectureCode()
+                         << endl;
+                    break;
+                }
+            }
+        }
+    }
+}
+
 
 void UcClass::removeStudent(Student &dropout) {
 
@@ -148,3 +165,14 @@ void UcClass::removeStudent(Student &dropout) {
     }
 }
 
+void UcClass::removeStudentClass(Student &dropout, string desired) {
+    if (findStudent(dropout.getCode())) {
+        for (Lecture &element: lectureClass) {
+            if (element.getLectureCode() == desired) {
+                element.decreaseNumberStudents();                 //remove student from Lecture object counting
+                dropout.removeClass(*this);
+            }
+        }
+        cout << "The student has been removed from this class" << endl;
+    }
+}

@@ -34,6 +34,8 @@ public:
     string newStudent(Student &student);
     bool findStudent(int upCode) const;
     void removeStudent(Student &dropout);
-};
+    void newClass(Student &rockStar, string desired);
+    void removeStudentClass(Student &dropout, string desired);
+    };
 
 #endif //SCHEDULES_UCCLASS_H

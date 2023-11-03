@@ -18,7 +18,6 @@ public:
     int getNumberStudents();
     void incrementNumberStudents();
     void decreaseNumberStudents();
-    void addLeics(Lecture leic);
     string getDay() const;
     string getType() const;
     string getLectureCode() const;
