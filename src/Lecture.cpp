@@ -58,4 +58,3 @@ bool Lecture::overlapsWith(const Lecture &lecture) {
     }
     return false;
 }
-

@@ -9,7 +9,6 @@ bool Student::operator>(const Student &s) const {
     return code > s.getCode();
 }
 
-
 int Student::getCode() const {
     return code;
 }
@@ -45,3 +44,4 @@ bool Student::checkAvailability(Lecture lecture) const {
     }
     return true;
 }
+

@@ -280,4 +280,3 @@ void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
     students.insert(newStudent);
     record.push("The Student " + to_string(numUp) + " was successfully added to UC " + class_.getUcCode() + " in " + class_.getClassNum() + " class.");
 }
-
