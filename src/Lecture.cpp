@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Lecture.h"
 using namespace std;
 
@@ -30,18 +31,31 @@ bool Lecture::operator<(const Lecture &lecture) const {
             return duration < lecture.duration;
         }
         return startHour < lecture.startHour;
+    } else{
+        const std::string days[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        auto it1 = std::find(std::begin(days), std::end(days), day);
+        auto it2 = std::find(std::begin(days), std::end(days), lecture.day);
+
+        if (it1 != std::end(days) && it2 != std::end(days)) {
+            return std::distance(std::begin(days), it1) < std::distance(std::begin(days), it2);
+        }
     }
-    if (day == "Monday") {
-        return (lecture.day == "Tuesday" or lecture.day == "Wednesday" or lecture.day == "Thursday" or lecture.day == "Friday" or lecture.day == "Saturday");
-    }
-    if (day == "Tuesday") {
-        return (lecture.day == "Wednesday" or lecture.day == "Thursday" or lecture.day == "Friday" or lecture.day == "Saturday");
-    }
-    if (day == "Wednesday") {
-        return (lecture.day == "Thursday" or lecture.day == "Friday" or lecture.day == "Saturday");
-    }
-    if (day == "Thursday") {
-        return (lecture.day == "Friday" or lecture.day == "Saturday");
-    }
-    return lecture.day == "Saturday";
+    return false;
 }
+
+bool Lecture::overlapsWith(const Lecture &lecture) {
+    if (day == lecture.day) {
+        if (type == "T" and (lecture.type == "TP" or lecture.type == "T" or lecture.type == "PL")) {
+            return false;
+        } else if (type == "TP" and (lecture.type == "T")) {
+            return false;
+        } else {
+            if ((startHour == lecture.startHour) or (startHour < (lecture.startHour + lecture.duration) and (startHour + duration) > lecture.startHour)
+                or (lecture.startHour < (startHour + duration) && (lecture.startHour + lecture.duration > startHour))){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+

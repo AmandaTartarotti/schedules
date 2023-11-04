@@ -22,12 +22,26 @@ void Student::addClass(const UcClass& class_) {
     classes.push_back(class_);
 }
 
-void Student::printClasses() {
-    for (UcClass class_ : classes) {
-        cout << class_.getUcCode() << " " << class_.getClassNum() << "\n";
-    }
-}
-
 vector<UcClass> Student::getClasses() const {
     return classes;
+}
+
+void Student::removeClass(UcClass class_) {
+    vector<UcClass>::iterator itr;
+    for (itr = classes.begin(); itr != classes.end(); itr++)
+        if (itr->getUcCode() == class_.getUcCode() && itr->getClassNum() == class_.getClassNum()) {
+            break;
+        }
+    classes.erase(itr);
+}
+
+bool Student::checkAvailability(Lecture lecture) const {
+    for (UcClass class_ : classes) {
+        for (Lecture scheduleLecture : class_.getLecture()) {
+            if (scheduleLecture.overlapsWith(lecture)) {
+                return false;
+            }
+        }
+    }
+    return true;
 }

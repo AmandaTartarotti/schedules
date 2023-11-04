@@ -6,9 +6,6 @@
 #include <string>
 #include <sstream>
 #include <map>
-#include <functional>
-#include <algorithm>
-
 using namespace std;
 
 
@@ -42,7 +39,6 @@ void ManageSchedule::readStudentClasses(const string& path) {
             classes.erase(pos);
             temp.incrementSize();
             class_ = temp;
-            class_.addStudent(student);
             classes.insert(class_);
         }
 
@@ -109,90 +105,167 @@ void ManageSchedule::readClasses(const string& path){
     classes = set<UcClass>(classvec.begin(), classvec.end()); //Set com todos os alunos ordenados por número
 }
 
-set<Student> ManageSchedule::getAllStudents() {
+
+set<Student> ManageSchedule::getAllStudents() const {
     return students;
 }
 
-set<UcClass> ManageSchedule::getAllClasses() {
+set<UcClass> ManageSchedule::getAllClasses() const {
     return classes;
 }
 
-void ManageSchedule::printSchedule(int n) {
-    Student student(n);
+
+void ManageSchedule::processRequests() {
+    if (requests.empty()) {
+        cout << "--------------------------------------------------\n";
+        cout << "There are no requests in the waiting list." << "\n";
+        return;
+    }
+
+    Request request = requests.front();
+    requests.pop();
+    switch(request.operation) {
+        case 1:
+            addClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
+        case 2:
+            removeClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
+            break;
+        default:
+            cout << "--------------------------------------------------\n";
+            cout << "Invalid option. Please, try again." << endl;
+            break;
+    }
+
+}
+
+void ManageSchedule::requestRemove(int option) {
+    int numUp;
+    cout << "--------------------------------------------------\n";
+    cout << "Please, enter the student's up number:";
+    cin >> numUp;
+    cout << "--------------------------------------------------\n";
+    Student student(numUp);
     auto it = students.find(student);
     if (it == students.end()) {
-        cout << "Estudante não encontrado.\n";
+        cout << "Student not found. Please, try again.\n";
         return;
     }
-    student = *it;
-
-    //Criar set ordenado por Dia/Hora
-    set<pair<Lecture, UcClass>> schedule;
-    for (UcClass class_ : student.getClasses()) {
-        for (const Lecture& lecture : class_.getLecture()) {
-            pair<Lecture, UcClass> temp = make_pair(lecture, class_);
-            schedule.insert(temp);
-        }
-    }
-
-    //Cout do horario
-    cout << "Horario de " << student.getName() << " (" << student.getCode() << ")\n";
-    cout << "\nUcCode-----Class----Lecture\n";
-    for (pair<Lecture, UcClass> item : schedule) {
-        cout << item.second.getUcCode() << " - " << item.second.getClassNum() << ": ";
-        cout << item.first.getDay() << ", " << item.first.getStartHour() << ", " << item.first.getDuration() << ", " << item.first.getType() << "\n";
-    }
-}
-
-void ManageSchedule::printAllStudents(const set<Student>& student) {
-    char option = '0', option2 = '0';
+    Student newStudent = *it;
+    string classCode, ucCode;
+    cout << "Enter the UC code (L.EICXXX):";
+    cin >> ucCode;
+    cout << "Enter the class code (XLEICXX):";
+    cin >> classCode;
     cout << "--------------------------------------------------\n";
-    cout << "Selecione a opcao\n";
-    cout << "1 - Ordenar por numero UP\n";
-    cout << "2 - Ordenar alfabeticamente\n";
-    cout << "3 - Ordenar ascendentemente\n";
-    cout << "4 - Ordenar decrescentemente\n";
-    cout << "--------------------------------------------------" << endl;
-    cout << "Option 1:";
-    cin >> option;
-    cout << "Option 2:";
-    cin >> option2; cout << "\n";
-    vector<Student> temp = vector<Student>(student.begin(),student.end());
-    if (option == '1' and option2 == '3') {
-        sort(temp.begin(), temp.end(),[](Student const &a, Student const &b){return a.getCode() < b.getCode();});
-    } else if (option == '1' and option2 == '4') {
-        sort(temp.begin(), temp.end(),[](Student const &a, Student const &b){return a.getCode() > b.getCode();});
-    } else if (option == '2' and option2 == '3') {
-        sort(temp.begin(), temp.end(),[](Student const &a, Student const &b){return a.getName() < b.getName();});
-    } else if (option == '2' and option2 == '4') {
-        sort(temp.begin(), temp.end(),[](Student const &a, Student const &b){return a.getName() > b.getName();});
-    } else {
-        cout << "Opcoes invalidas. Por favor, tente novamente." << endl;
-        return;
-    }
-    if (option == '1') {
-        for (const Student& stud : temp) {
-            cout << stud.getCode() << " - " << stud.getName() << "\n";
-        }
-    } else {
-        for (const Student& stud : temp) {
-            cout << stud.getName() << " - " << stud.getCode() << "\n";
+
+    UcClass class_(ucCode, classCode);
+    for (auto newClass : newStudent.getClasses()) {
+        if (newClass.getClassNum() == classCode and newClass.getUcCode() == ucCode) {
+            Request request;
+            request.numUp = numUp;
+            request.operation = option;
+            request.ucCode = ucCode;
+            request.classNum = classCode;
+            requests.push(request);
+            cout << "Your request has been registered with the number " << requests.size() << "." << endl;
+            return;
         }
     }
+    cout << "Class not found. Please, try again.\n";
 }
 
-void ManageSchedule::printStudentsInClass() {
-    string ucCode, classCode;
-    cout << "Introduza o codigo da UC (L.EICXXX)\n";
-    cin >> ucCode; cout << "\n";
-    cout << "Introduza o codigo da turma (XLEICXX)\n";
-    cin >> classCode; cout << "\n";
-    UcClass class_(ucCode, classCode);
+void ManageSchedule::removeClassStudent(int numUp, const UcClass& class_) {
     auto it = classes.find(class_);
-    if (it != classes.end()) {
-        UcClass newClass = *it;
-        printAllStudents(newClass.getStudents());
+
+    Student student(numUp);
+    auto it1 = students.find(student);
+
+
+    Student newStudent = *it1;
+    UcClass newClass_ = *it;
+
+    newStudent.removeClass(class_);
+    newClass_.decrementSize();
+    classes.erase(it);
+    classes.insert(newClass_);
+
+    students.erase(it1);
+    students.insert(newStudent);
+}
+
+void ManageSchedule::requestAdd(int option) {
+    int numUp;
+    cout << "--------------------------------------------------\n";
+    cout << "Please, enter the student's up number:";
+    cin >> numUp;
+    cout << "--------------------------------------------------\n";
+    Student student(numUp);
+    auto it = students.find(student);
+    if (it == students.end()) {
+        cout << "Student not found. Please, try again.\n";
         return;
     }
-    cout << "Não foi possível encontrar a turma. Por favor, tente novamente.\n";
+    Student newStudent = *it;
+    string classCode, ucCode;
+    cout << "Enter the UC code (L.EICXXX):";
+    cin >> ucCode;
+    cout << "Enter the class code (XLEICXX):";
+    cin >> classCode;
+    cout << "--------------------------------------------------\n";
+
+    UcClass class_(ucCode, classCode);
+    auto it1 = classes.find(class_);
+    if (it1 == classes.end()) {
+        cout << "Class not found. Please, try again.\n";
+        return;
+    }
+    Request request;
+    request.numUp = numUp;
+    request.operation = option;
+    request.ucCode = ucCode;
+    request.classNum = classCode;
+    requests.push(request);
+    cout << "Your request has been registered with the number " << requests.size() << "." << endl;
 }
+
+void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
+    auto it = classes.find(class_);
+    Student stud(numUp);
+    auto it1 = students.find(stud);
+    if (it1->getClasses().size() == 7) {
+        cout << "This student is already registered in 7 UCs. Please, try again.";
+    }
+
+    if (it->getSize() >= 27) {
+        cout << "The class you are trying to join is already full.\n";
+    }
+    for (auto itr = it; itr != classes.end() and itr->getUcCode() == it->getUcCode(); itr++) {
+        if (it->getSize() + 1 - itr->getSize() >= 4) {
+            return;
+        }
+    }
+    for (auto itr = it; itr != --classes.begin() and itr->getUcCode() == it->getUcCode(); itr--) {
+        if (it->getSize() + 1 - itr->getSize() >= 4) {
+            return;
+        }
+    }
+    for (const Lecture& lecture : it->getLecture()) {
+        if (!it1->checkAvailability(lecture)) {
+            cout << "The new class overlaid. Please try again.\n";
+            return;
+        }
+    }
+
+    //A dar erro ainda. Os objetos nao coincidem depois
+    Student newStudent = *it1;
+    UcClass newClass_ = *it;
+    newStudent.addClass(newClass_);
+    newClass_.incrementSize();
+    classes.erase(it);
+    classes.insert(newClass_);
+    students.erase(it1);
+    students.insert(newStudent);
+}
+
+
+

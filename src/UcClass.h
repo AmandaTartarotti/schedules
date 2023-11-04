@@ -17,19 +17,17 @@ private:
     string classnum;
     int size;
     vector<Lecture> lectureClass;
-    set<Student> studentClass;
 public:
     UcClass(const string& uccode_, const string& classnum_);
-    string getUcCode();
-    string getClassNum();
-    int getSize();
+    string getUcCode() const;
+    string getClassNum() const;
+    int getSize() const;
     void incrementSize();
+    void decrementSize();
     bool operator<(UcClass s) const;
     bool operator==(UcClass s);
     void addLecture(const Lecture& lecture);
-    vector<Lecture> getLecture();
-    set<Student> getStudents();
-    void addStudent(const Student& stud);
+    vector<Lecture> getLecture() const;
 };
 
 #endif //SCHEDULES_UCCLASS_H

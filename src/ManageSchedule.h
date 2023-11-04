@@ -5,23 +5,28 @@
 
 #include <string>
 #include <set>
+#include <queue>
 #include "Student.h"
 #include "UcClass.h"
+#include "Request.h"
 using namespace std;
 
 class ManageSchedule{
     private:
         set<Student> students;
         set<UcClass> classes;
+        queue<Request> requests;
     public:
         ManageSchedule() = default; // constructor
         void readStudentClasses(const string& path);
         void readClasses(const string& path);
-        set<Student> getAllStudents();
-        set<UcClass> getAllClasses();
-        void printSchedule(int n);                             //Listagem do horário de um aluno
-        void printAllStudents(const set<Student>& student);    //Listagem de todos os alunos
-        void printStudentsInClass();                           //Listagem de alunos em uma turma
+        set<Student> getAllStudents() const;
+        set<UcClass> getAllClasses() const;
+        void requestRemove(int option);
+        void requestAdd(int option);
+        void processRequests();
+        void removeClassStudent(int numUp, const UcClass& class_);
+        void addClassStudent(int numUp, const UcClass& class_);
 };
 
 #endif //SCHEDULES_MANAGESCHEDULE_H

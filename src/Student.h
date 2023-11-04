@@ -24,10 +24,11 @@ public:
     int getCode() const;
     string getName() const;
     void addClass(const UcClass& class_);
-    void printClasses();
+    void removeClass(UcClass class_);
     vector<UcClass> getClasses() const;
     bool operator<(const Student& s) const;
     bool operator>(const Student& s) const;
+    bool checkAvailability(Lecture lecture) const;
 };
 
 
