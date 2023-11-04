@@ -16,14 +16,6 @@ int main(){
     int numUp;
 
     while(state) {
-        Student stud(202025232);
-        set<Student> setstud = manageschedule.getAllStudents();
-        auto it1 = setstud.find(stud);
-        Student student = *it1;
-        for (auto c : student.getClasses()) {
-            cout << c.getUcCode() << "\n";
-        }
-        cout << "////////////////////////\n";
         printMenu();
         cin >> menuId;
         switch (menuId) {

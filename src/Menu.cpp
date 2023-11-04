@@ -143,16 +143,18 @@ void printStudentsInClass(const set<Student>& students) {
     cin >> ucCode;
     cout << "Enter the class code (XLEICXX):";
     cin >> classCode;
+    UcClass newClass(ucCode, classCode);
 
     set<Student> studentset;
     for (const Student & student : students) {
         for (const UcClass & class_ : student.getClasses()) {
-            if (class_.getUcCode() == ucCode && class_.getClassNum() == classCode) {
+            if ((UcClass) class_ == newClass) {
                 studentset.insert(student);
                 break;
             }
         }
     }
+
     if (!studentset.empty()) {
         printAllStudents(studentset);
         return;
@@ -230,6 +232,10 @@ void printClassSchedule(const set<UcClass>& classes) {
         }
     }
 
+    if (schedule.empty()) {
+        cout << "It was not possible to find that class. Please, try again.\n";
+        return;
+    }
     // Cout do horario
     cout << "Schedule of class " << classCode << "\n";
     cout << "\nUC        Day        StartHour   Duration   Type\n";
@@ -259,6 +265,11 @@ void printUcSchedule(const set<UcClass>& classes) {
                 schedule.insert(temp);
             }
         }
+    }
+
+    if (schedule.empty()) {
+        cout << "It was not possible to find that class. Please, try again.\n";
+        return;
     }
 
     // Cout do horario

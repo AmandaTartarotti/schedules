@@ -127,6 +127,7 @@ void ManageSchedule::processRequests() {
     switch(request.operation) {
         case 1:
             addClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
+            break;
         case 2:
             removeClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
             break;
@@ -160,7 +161,7 @@ void ManageSchedule::requestRemove(int option) {
 
     UcClass class_(ucCode, classCode);
     for (auto newClass : newStudent.getClasses()) {
-        if (newClass.getClassNum() == classCode and newClass.getUcCode() == ucCode) {
+        if (newClass == class_) {
             Request request;
             request.numUp = numUp;
             request.operation = option;
@@ -219,6 +220,13 @@ void ManageSchedule::requestAdd(int option) {
         cout << "Class not found. Please, try again.\n";
         return;
     }
+    for (UcClass tClass_ : newStudent.getClasses()) {
+        if (tClass_ == class_) {
+            cout << "The student is already enrolled on that class. Please, try again.\n";
+            return;
+        }
+    }
+
     Request request;
     request.numUp = numUp;
     request.operation = option;
