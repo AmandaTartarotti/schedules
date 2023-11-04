@@ -14,26 +14,20 @@ class Student;
 class UcClass {
 private:
     string uccode;
+    string classnum;
     int size;
     vector<Lecture> lectureClass;
-    set<Student> studentClass;
 public:
-    UcClass(const string& uccode_);
+    UcClass(const string& uccode_, const string& classnum_);
     string getUcCode() const;
-    bool findLecture(string lectureCode_) const;
-    void getLectureAndIncrement(string lectureCode_);
-    int getSize();
+    string getClassNum() const;
+    int getSize() const;
     void incrementSize();
-    void decreaseSize();
+    void decrementSize();
     bool operator<(UcClass s) const;
     bool operator==(UcClass s);
-    void addLecture(Lecture lecture);
-    vector<Lecture> getLecture();
-    set<Student> getStudents();
-    void addStudent(Student &stud, string lectureCode_);
-    string newStudent(Student &student);
-    bool findStudent(int upCode) const;
-    void removeStudent(Student &dropout);
+    void addLecture(const Lecture& lecture);
+    vector<Lecture> getLecture() const;
 };
 
 #endif //SCHEDULES_UCCLASS_H

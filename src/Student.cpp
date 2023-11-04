@@ -1,6 +1,5 @@
-
+//Student.cpp
 #include "Student.h"
-using namespace std;
 
 bool Student::operator<(const Student &s) const {
     return code < s.getCode();
@@ -8,19 +7,6 @@ bool Student::operator<(const Student &s) const {
 
 bool Student::operator>(const Student &s) const {
     return code > s.getCode();
-}
-
-list<Lecture> Student::getLectures() const{
-    return lectures;
-}
-
-bool Student::checkAvabialy(Lecture otherLecture) const{
-    for (auto element : lectures){
-        if(element.overlapsWith(otherLecture)){
-            return false;
-        }
-    }
-    return true;
 }
 
 int Student::getCode() const {
@@ -31,42 +17,31 @@ string Student::getName() const {
     return name;
 }
 
-void Student::addClass(UcClass class_, string lectureCode_) {
-    numUC++;
-    for (Lecture &element : class_.getLecture()) {
-        if (element.getLectureCode() == lectureCode_)
-            lectures.push_back(element);
-    }
+void Student::addClass(const UcClass& class_) {
+    classes.push_back(class_);
 }
 
-string Student::removeClass(UcClass& class_){
+vector<UcClass> Student::getClasses() const {
+    return classes;
+}
 
-    string lectureCode_;
+void Student::removeClass(UcClass class_) {
+    vector<UcClass>::iterator itr;
+    for (itr = classes.begin(); itr != classes.end(); itr++)
+        if (itr->getUcCode() == class_.getUcCode() && itr->getClassNum() == class_.getClassNum()) {
+            break;
+        }
+    classes.erase(itr);
+}
 
-    if (class_.findStudent(this->getCode())) {
-        for (auto removeLeic = lectures.begin(); removeLeic != lectures.end();) {
-            if (class_.getUcCode() == removeLeic->getUCCode()) {
-                removeLeic = lectures.erase(removeLeic);
-                lectureCode_ = removeLeic->getLectureCode();
-            } else {
-                removeLeic++;
+bool Student::checkAvailability(Lecture lecture) const {
+    for (UcClass class_ : classes) {
+        for (Lecture scheduleLecture : class_.getLecture()) {
+            if (scheduleLecture.overlapsWith(lecture)) {
+                return false;
             }
         }
     }
-    else {
-        cout << "Hey, this student was not enrolled in this UC!" << endl;
-    }
-
-    return lectureCode_;
+    return true;
 }
 
-/* NÃO TA A SER UTILIZADO
-void Student::printClasses() {
-    for (UcClass class_ : classes) {
-        cout << class_.getUcCode() << endl;
-    }
-}*/
-
-int Student::getNumUc() const {
-    return numUC;
-}

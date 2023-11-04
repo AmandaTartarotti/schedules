@@ -1,56 +1,12 @@
-#include <iostream>
+#include <algorithm>
 #include "Lecture.h"
 using namespace std;
 
-Lecture::Lecture(const string &ucCode_, const string &lecturecode_, const std::string &day_, float startHour_, float duration_, const std::string &type_) {
-    ucCode = ucCode_;
-    lecturecode = lecturecode_;
+Lecture::Lecture(const std::string &day_, float startHour_, float duration_, const std::string &type_) {
     day = day_;
     startHour = startHour_;
     duration = duration_;
     type = type_;
-    numberStudents = 0;
-}
-
-bool Lecture::overlapsWith(const Lecture &otherLecture) const {
-    // cout << day << " " << otherLecture.day << endl;
-    if (day == otherLecture.day) {
-        if (type == "T" && (otherLecture.type == "TP" || otherLecture.type == "T" || otherLecture.type == "PL")) {
-            return false; // aulas não se sobrepõem para o tipo "T"
-        } else if (type == "TP" && (otherLecture.type == "T")) {
-            return false; // aulas não se sobrepõem para o tipo "T"
-        } else {
-            //cout << "entrei";
-            //cout << startHour << " " << otherLecture.startHour << endl;
-            // Verifica se a aula começa antes da outra terminar e termina após a outra começar
-            if ((startHour == otherLecture.startHour) || (startHour < (otherLecture.startHour + otherLecture.duration) && (startHour + duration) > otherLecture.startHour)
-             || (otherLecture.startHour < (startHour + duration) && (otherLecture.startHour + otherLecture.duration > startHour))){
-                //cout << "sobrepos" << endl;
-                return true; // Palestras se sobrepõem
-            }
-        }
-    }
-    return false; // Palestras não se sobrepõem
-}
-
-int Lecture::getNumberStudents() {
-    return numberStudents;
-}
-
-void Lecture::incrementNumberStudents() {
-    numberStudents += 1;
-}
-
-void Lecture::decreaseNumberStudents() {
-    numberStudents -= 1;
-}
-
-string Lecture::getLectureCode() const{
-    return lecturecode;
-}
-
-string Lecture::getUCCode() const{
-    return ucCode;
 }
 
 string Lecture::getDay() const {
@@ -84,8 +40,21 @@ bool Lecture::operator<(const Lecture &lecture) const {
             return std::distance(std::begin(days), it1) < std::distance(std::begin(days), it2);
         }
     }
+    return false;
 }
 
-bool Lecture::operator==(const Lecture& otherLecture) const{
-    return getLectureCode() == otherLecture.getLectureCode();
+bool Lecture::overlapsWith(const Lecture &lecture) {
+    if (day == lecture.day) {
+        if (type == "T" and (lecture.type == "TP" or lecture.type == "T" or lecture.type == "PL")) {
+            return false;
+        } else if (type == "TP" and (lecture.type == "T")) {
+            return false;
+        } else {
+            if ((startHour == lecture.startHour) or (startHour < (lecture.startHour + lecture.duration) and (startHour + duration) > lecture.startHour)
+                or (lecture.startHour < (startHour + duration) && (lecture.startHour + lecture.duration > startHour))){
+                return true;
+            }
+        }
+    }
+    return false;
 }

@@ -6,7 +6,6 @@
 #include <string>
 #include <iostream>
 #include <set>
-#include <list>
 #include <utility>
 #include <vector>
 #include "UcClass.h"
@@ -17,22 +16,19 @@ class Student {
 private:
     int code;
     string name;
-    int numUC;
-    list<Lecture> lectures;                       // guarda os obejtos lectures e a UCcode
+    vector<UcClass> classes;
 public:
     Student() = default;
-    list<Lecture> getLectures() const;
     Student(int code_): code(code_) {}
     Student(int code_, string name_): code(code_), name(std::move(name_)) {}
     int getCode() const;
     string getName() const;
-    void addClass(UcClass class_, string lectureCode_);
-    string removeClass(UcClass& class_);
-    //void printClasses();
-    int getNumUc() const;
+    void addClass(const UcClass& class_);
+    void removeClass(UcClass class_);
+    vector<UcClass> getClasses() const;
     bool operator<(const Student& s) const;
     bool operator>(const Student& s) const;
-    bool checkAvabialy(Lecture otherLecture) const;
+    bool checkAvailability(Lecture lecture) const;
 };
 
 
