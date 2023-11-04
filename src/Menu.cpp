@@ -287,10 +287,12 @@ void printUcSchedule(const set<UcClass>& classes) {
 
 void showOccupation(const set<UcClass>& classes) {
     string ucCode, classCode;
-    cout << "Enter the UC code (L.EICXXX)\n";
-    cin >> ucCode; cout << "\n";
-    cout << "Enter the class code (XLEICXX)\n";
-    cin >> classCode; cout << "\n";
+    cout << "--------------------------------------------------\n";
+    cout << "Enter the UC code (L.EICXXX):";
+    cin >> ucCode;
+    cout << "Enter the class code (XLEICXX):";
+    cin >> classCode;
+    cout << "--------------------------------------------------\n";
     UcClass class_(ucCode, classCode);
     auto it = classes.find(class_);
     if (it != classes.end()) {

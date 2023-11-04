@@ -121,20 +121,17 @@ void ManageSchedule::processRequests() {
         cout << "There are no requests in the waiting list." << "\n";
         return;
     }
-
-    Request request = requests.front();
-    requests.pop();
-    switch(request.operation) {
-        case 1:
-            addClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
-            break;
-        case 2:
-            removeClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
-            break;
-        default:
-            cout << "--------------------------------------------------\n";
-            cout << "Invalid option. Please, try again." << endl;
-            break;
+    while (!requests.empty()) {
+        Request request = requests.front();
+        requests.pop();
+        switch (request.operation) {
+            case 1:
+                addClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
+                break;
+            case 2:
+                removeClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
+                break;
+        }
     }
 
 }
@@ -192,6 +189,8 @@ void ManageSchedule::removeClassStudent(int numUp, const UcClass& class_) {
 
     students.erase(it1);
     students.insert(newStudent);
+
+    record.push("The Student " + to_string(numUp) + " was successfully removed from UC " + class_.getUcCode() + ".");
 }
 
 void ManageSchedule::requestAdd(int option) {
@@ -225,6 +224,10 @@ void ManageSchedule::requestAdd(int option) {
             cout << "The student is already enrolled on that class. Please, try again.\n";
             return;
         }
+        if (tClass_.getUcCode() == class_.getUcCode()) {
+            cout << "The student is already enrolled on that UC. Please, try again.\n";
+            return;
+        }
     }
 
     Request request;
@@ -248,12 +251,14 @@ void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
         cout << "The class you are trying to join is already full.\n";
     }
     for (auto itr = it; itr != classes.end() and itr->getUcCode() == it->getUcCode(); itr++) {
-        if (it->getSize() + 1 - itr->getSize() >= 4) {
+        if (it->getSize() + 1 - itr->getSize() > 4) {
+            cout << "ola1\n";
             return;
         }
     }
     for (auto itr = it; itr != --classes.begin() and itr->getUcCode() == it->getUcCode(); itr--) {
-        if (it->getSize() + 1 - itr->getSize() >= 4) {
+        if (it->getSize() + 1 - itr->getSize() > 4) {
+            cout << "ola2\n";
             return;
         }
     }
@@ -273,7 +278,6 @@ void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
     classes.insert(newClass_);
     students.erase(it1);
     students.insert(newStudent);
+    record.push("The Student " + to_string(numUp) + " was successfully added to UC " + class_.getUcCode() + " in " + class_.getClassNum() + " class.");
 }
-
-
 

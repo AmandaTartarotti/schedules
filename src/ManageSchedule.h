@@ -6,6 +6,7 @@
 #include <string>
 #include <set>
 #include <queue>
+#include <stack>
 #include "Student.h"
 #include "UcClass.h"
 #include "Request.h"
@@ -16,6 +17,7 @@ class ManageSchedule{
         set<Student> students;
         set<UcClass> classes;
         queue<Request> requests;
+        stack<string> record;
     public:
         ManageSchedule() = default; // constructor
         void readStudentClasses(const string& path);

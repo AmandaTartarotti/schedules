@@ -13,7 +13,6 @@ int main(){
     manageschedule.readStudentClasses(path);
     bool state = true;
     int menuId = 0;
-    int numUp;
 
     while(state) {
         printMenu();
