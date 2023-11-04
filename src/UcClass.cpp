@@ -17,7 +17,7 @@ string UcClass::getUcCode() const{
     return uccode;
 }
 
-int UcClass::getSize() {
+int UcClass::getSize() const {
     return size;
 }
 

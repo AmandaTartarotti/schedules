@@ -7,6 +7,6 @@
 -- Detecting CXX compile features - done
 -- Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE) 
 Doxygen needs to be installed to generate the documentation.
--- Configuring done (8.9s)
--- Generating done (0.1s)
+-- Configuring done (4.4s)
+-- Generating done (0.0s)
 -- Build files have been written to: C:/Users/gonca/schedules/cmake-build-debug

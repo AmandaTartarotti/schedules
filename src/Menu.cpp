@@ -203,7 +203,7 @@ void printStudentSchedule(const set<Student>& students) {
 
     // Cout do horario
     cout << student.getName() <<  "'s schedule (" << student.getCode() << "):\n";
-    cout << "\nLecture   Class     Day        StartHour   Duration   Type\n";
+    cout << "\nUC        Class     Day        StartHour   Duration   Type\n";
 
     for (pair<Lecture, UcClass> lecture : schedule) {
         cout << left << setw(9) << lecture.second.getUcCode() << " ";
@@ -268,13 +268,13 @@ void printUcSchedule(const set<UcClass>& classes) {
     }
 
     if (schedule.empty()) {
-        cout << "It was not possible to find that class. Please, try again.\n";
+        cout << "It was not possible to find that UC. Please, try again.\n";
         return;
     }
 
     // Cout do horario
     cout << "Schedule of UC " << ucCode << "\n";
-    cout << "\nLecture   Day        StartHour   Duration   Type\n";
+    cout << "\nClass     Day        StartHour   Duration   Type\n";
 
     for (pair<Lecture, UcClass> lecture : schedule) {
         cout << left << setw(9) << lecture.second.getClassNum() << " ";
