@@ -13,6 +13,7 @@ void printMenu(){
     cout << "4 - Process requests" << endl;
     cout << "5 - Consult occupation" << endl;
     cout << "6 - Consult students with, at least, 'n' UCs" << endl;
+    cout << "7 - Consult the record of all recent changes made to the system" << endl;
     cout << "0 - Exit" << endl;
     cout << "--------------------------------------------------\n";
     cout << "Option:";

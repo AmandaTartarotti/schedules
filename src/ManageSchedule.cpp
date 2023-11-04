@@ -136,7 +136,7 @@ void ManageSchedule::processRequests() {
 
 }
 
-void ManageSchedule::requestRemove(int option) {
+Student ManageSchedule::getStudent() const{
     int numUp;
     cout << "--------------------------------------------------\n";
     cout << "Please, enter the student's up number:";
@@ -146,24 +146,39 @@ void ManageSchedule::requestRemove(int option) {
     auto it = students.find(student);
     if (it == students.end()) {
         cout << "Student not found. Please, try again.\n";
-        return;
+        return Student(-1);
     }
-    Student newStudent = *it;
+    return *it;
+}
+
+UcClass ManageSchedule::getUcclass() const{
     string classCode, ucCode;
-    cout << "Enter the UC code (L.EICXXX):";
+    cout << "Enter the UC code: ";
     cin >> ucCode;
-    cout << "Enter the class code (XLEICXX):";
+    cout << "Enter the class code: ";
     cin >> classCode;
     cout << "--------------------------------------------------\n";
 
     UcClass class_(ucCode, classCode);
+
+    return class_;
+}
+
+void ManageSchedule::requestRemove(int option) {
+    Student newStudent = getStudent();
+    if (newStudent.getCode() == -1) {
+        return;
+    }
+
+    UcClass class_ = getUcclass();
+
     for (auto newClass : newStudent.getClasses()) {
         if (newClass == class_) {
             Request request;
-            request.numUp = numUp;
+            request.numUp = newStudent.getCode();
             request.operation = option;
-            request.ucCode = ucCode;
-            request.classNum = classCode;
+            request.ucCode = class_.getUcCode();
+            request.classNum = class_.getClassNum();
             requests.push(request);
             cout << "Your request has been registered with the number " << requests.size() << "." << endl;
             return;
@@ -177,7 +192,6 @@ void ManageSchedule::removeClassStudent(int numUp, const UcClass& class_) {
 
     Student student(numUp);
     auto it1 = students.find(student);
-
 
     Student newStudent = *it1;
     UcClass newClass_ = *it;
@@ -194,31 +208,18 @@ void ManageSchedule::removeClassStudent(int numUp, const UcClass& class_) {
 }
 
 void ManageSchedule::requestAdd(int option) {
-    int numUp;
-    cout << "--------------------------------------------------\n";
-    cout << "Please, enter the student's up number:";
-    cin >> numUp;
-    cout << "--------------------------------------------------\n";
-    Student student(numUp);
-    auto it = students.find(student);
-    if (it == students.end()) {
-        cout << "Student not found. Please, try again.\n";
+    Student newStudent = getStudent();
+    if (newStudent.getCode() == -1) {
         return;
     }
-    Student newStudent = *it;
-    string classCode, ucCode;
-    cout << "Enter the UC code (L.EICXXX):";
-    cin >> ucCode;
-    cout << "Enter the class code (XLEICXX):";
-    cin >> classCode;
-    cout << "--------------------------------------------------\n";
 
-    UcClass class_(ucCode, classCode);
+    UcClass class_ = getUcclass();
     auto it1 = classes.find(class_);
     if (it1 == classes.end()) {
         cout << "Class not found. Please, try again.\n";
         return;
     }
+
     for (UcClass tClass_ : newStudent.getClasses()) {
         if (tClass_ == class_) {
             cout << "The student is already enrolled on that class. Please, try again.\n";
@@ -231,10 +232,10 @@ void ManageSchedule::requestAdd(int option) {
     }
 
     Request request;
-    request.numUp = numUp;
+    request.numUp = newStudent.getCode();
     request.operation = option;
-    request.ucCode = ucCode;
-    request.classNum = classCode;
+    request.ucCode = class_.getUcCode();
+    request.classNum = class_.getClassNum();
     requests.push(request);
     cout << "Your request has been registered with the number " << requests.size() << "." << endl;
 }
@@ -244,32 +245,31 @@ void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
     Student stud(numUp);
     auto it1 = students.find(stud);
     if (it1->getClasses().size() == 7) {
-        cout << "This student is already registered in 7 UCs. Please, try again.";
+        record.push("The student " + to_string(numUp) + " is already registered in 7 UCs. It is not possible to include him/her in the UC " + class_.getUcCode() + ".");
     }
 
     if (it->getSize() >= 27) {
-        cout << "The class you are trying to join is already full.\n";
+        record.push("The class " + class_.getClassNum() + " is already full. It is not possible to include the student " + to_string(numUp) + ".");
     }
     for (auto itr = it; itr != classes.end() and itr->getUcCode() == it->getUcCode(); itr++) {
         if (it->getSize() + 1 - itr->getSize() > 4) {
-            cout << "ola1\n";
+            record.push("The class " + class_.getClassNum() + " cannot receive another student to maintain the balance of classes occupation. It is not possible to include the student " + to_string(numUp) + ".");
             return;
         }
     }
     for (auto itr = it; itr != --classes.begin() and itr->getUcCode() == it->getUcCode(); itr--) {
         if (it->getSize() + 1 - itr->getSize() > 4) {
-            cout << "ola2\n";
+            record.push("The class " + class_.getClassNum() + " cannot receive another student to maintain the balance of classes occupation. It is not possible to include the student " + to_string(numUp) + ".");
             return;
         }
     }
     for (const Lecture& lecture : it->getLecture()) {
         if (!it1->checkAvailability(lecture)) {
-            cout << "The new class overlaid. Please try again.\n";
+            record.push("The new class" + class_.getClassNum() + "overlaid the student" + to_string(numUp) + "schedule. It is not possible to conclude the request.");
             return;
         }
     }
 
-    //A dar erro ainda. Os objetos nao coincidem depois
     Student newStudent = *it1;
     UcClass newClass_ = *it;
     newStudent.addClass(newClass_);
@@ -279,4 +279,68 @@ void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
     students.erase(it1);
     students.insert(newStudent);
     record.push("The Student " + to_string(numUp) + " was successfully added to UC " + class_.getUcCode() + " in " + class_.getClassNum() + " class.");
+}
+
+void ManageSchedule::requestSwitch(){
+    Student newStudent = getStudent();
+    if (newStudent.getCode() == -1) {
+        return;
+    }
+
+    cout << "First, let's check the Uc and Class the student wants to leave" << endl;
+    UcClass classLeave = getUcclass();
+
+    bool classFound = false;
+    for (auto newClass : newStudent.getClasses()) {
+        if (newClass ==classLeave) {
+            Request request_;
+            request_.numUp = newStudent.getCode();
+            request_.operation = 2;
+            request_.ucCode = classLeave.getUcCode();
+            request_.classNum = classLeave.getClassNum();
+            requests.push(request_);
+            classFound = true;
+            break;
+        }
+    }
+
+    if (!classFound) {
+        cout << "Class not found. Please, try again.\n";
+        return;
+    }
+
+    cout << "Now, let's talk about the Uc and Class the student wants to get in" << endl;
+    UcClass classAdd = getUcclass();
+    auto it1 = classes.find(classAdd);
+    if (it1 == classes.end()) {
+        cout << "Class not found. Please, try again.\n";
+        return;
+    }
+
+    for (UcClass tClass_ : newStudent.getClasses()) {
+        if (tClass_ == classAdd) {
+            cout << "The student is already enrolled on that class. Please, try again.\n";
+            return;
+        }
+        if (tClass_.getUcCode() == classAdd.getUcCode()) {
+            cout << "The student is already enrolled on that UC. Please, try again.\n";
+            return;
+        }
+    }
+
+    Request request;
+    request.numUp = newStudent.getCode();
+    request.operation = 1;
+    request.ucCode = classAdd.getUcCode();
+    request.classNum = classAdd.getClassNum();
+    requests.push(request);
+    cout << "Your request has been registered with the number " << requests.size() << "." << endl;
+}
+
+void ManageSchedule::accessRecord(){
+    while(!record.empty()) {
+        string record_ = record.top();
+        std::cout << record_ << std::endl;
+        record.pop();
+    }
 }

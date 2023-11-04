@@ -24,11 +24,16 @@ class ManageSchedule{
         void readClasses(const string& path);
         set<Student> getAllStudents() const;
         set<UcClass> getAllClasses() const;
+        Student getStudent() const;
+        UcClass getUcclass() const;
         void requestRemove(int option);
         void requestAdd(int option);
+        void requestSwitch();
         void processRequests();
         void removeClassStudent(int numUp, const UcClass& class_);
         void addClassStudent(int numUp, const UcClass& class_);
+        void switchClassStudent(int numUp, const UcClass& class_);
+        void accessRecord();
 };
 
 #endif //SCHEDULES_MANAGESCHEDULE_H

@@ -40,7 +40,7 @@ int main(){
                         manageschedule.requestRemove(menuId);
                         break;
                     case 3:
-                        //switchStudent(schedule);
+                        manageschedule.requestSwitch();
                         break;
                 }
                 break;
@@ -52,6 +52,9 @@ int main(){
                 break;
             case 6:
                 studentsInAtLeastN_UCs(manageschedule.getAllStudents());
+                break;
+            case 7:
+                manageschedule.accessRecord();
                 break;
             case 0:
                 cout << "--------------------------------------------------\n";
