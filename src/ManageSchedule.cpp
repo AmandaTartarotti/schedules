@@ -150,6 +150,7 @@ void ManageSchedule::processRequests() {
                         break;
                 }
             }
+            cout << "--------------------------------------------------" << endl;
             cout << "All requests were processed!" << endl;
             break;
         case '1':
@@ -163,6 +164,7 @@ void ManageSchedule::processRequests() {
                     removeClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
                     break;
             }
+            cout << "--------------------------------------------------" << endl;
             cout << "The request was processed!" << endl;
             break;
     }

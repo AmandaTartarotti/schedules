@@ -91,7 +91,7 @@ void printMenuRequest() {
 
 void printAllStudents(const set<Student>& student)  {
     char option = '0', option2 = '0';
-    cout << "--------------------------------------------------\n";
+    cout << "--------------------------------------------------" << endl;
     cout << "Select a student sorting option:\n";
     cout << "1 - Sort by UP number\n";
     cout << "2 - Sort alphabetically\n";
@@ -144,6 +144,7 @@ void printAllStudents(const set<Student>& student)  {
 
 void printStudentsInClass(const set<Student>& students) {
     string ucCode, classCode;
+    cout << "--------------------------------------------------" << endl;
     cout << "Enter the UC code (L.EICXXX or UPXXX):";
     cin >> ucCode;
     cout << "Enter the class code (XLEICXX):";
@@ -208,7 +209,7 @@ void studentsInAtLeastN_UCs(const set<Student>& student){
 
     int n = stoi(num);
     for (const Student& stud : student){
-        if (stud.getClasses().size() > n){
+        if (stud.getClasses().size() >= n){
             count++;
         }
     }
@@ -345,6 +346,7 @@ void showOccupationUc(const set<UcClass>& classes){
     cout << "--------------------------------------------------\n";
     cout << "Enter the UC code (L.EICXXX or UPXXX):";
     cin >> ucCode;
+    cout << "--------------------------------------------------" << endl;
 
     for (auto class_ : classes) {
         if (class_.getUcCode() == ucCode){
