@@ -50,7 +50,8 @@ bool Lecture::overlapsWith(const Lecture &lecture) {
         } else if (type == "TP" and (lecture.type == "T")) {
             return false;
         } else {
-            if ((startHour == lecture.startHour) or (startHour < (lecture.startHour + lecture.duration) and (startHour + duration) > lecture.startHour)
+            if ((startHour == lecture.startHour) or (startHour < (lecture.startHour + lecture.duration)
+                    and (startHour + duration) > lecture.startHour)
                 or (lecture.startHour < (startHour + duration) && (lecture.startHour + lecture.duration > startHour))){
                 return true;
             }

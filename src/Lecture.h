@@ -41,7 +41,7 @@ public:
     float getDuration() const;
     //TODO
     /**
-     * @brief defines de < operator and return each lecture starts earlier or has the smallest duration
+     * @brief defines the "<" operator and return each lecture starts earlier or has the smallest duration
      * @complexity O(1)
      */
     bool operator<(const Lecture &lecture) const;

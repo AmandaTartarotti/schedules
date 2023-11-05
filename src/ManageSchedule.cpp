@@ -245,7 +245,8 @@ void ManageSchedule::removeClassStudent(int numUp, const UcClass& class_) {
     students.erase(it1);
     students.insert(newStudent);
 
-    record.push("The Student " + to_string(numUp) + " was successfully removed from UC " + class_.getUcCode() + ".");
+    record.push("The Student " + to_string(numUp)
+                + " was successfully removed from UC " + class_.getUcCode() + ".");
 }
 
 void ManageSchedule::requestAdd(int option) {
@@ -320,7 +321,8 @@ void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
     classes.insert(newClass_);
     students.erase(it1);
     students.insert(newStudent);
-    record.push("The Student " + to_string(numUp) + " was successfully added to UC " + class_.getUcCode() + " in " + class_.getClassNum() + " class.");
+    record.push("The Student " + to_string(numUp) + " was successfully added to UC "
+                    + class_.getUcCode() + " in " + class_.getClassNum() + " class.");
 }
 
 void ManageSchedule::requestSwitch(){
