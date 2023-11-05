@@ -19,6 +19,7 @@ class ManageSchedule{
         queue<Request> requests;
         stack<string> record;
     public:
+
         ManageSchedule() = default; // constructor
         void readStudentClasses(const string& path);
         void readClasses(const string& path);
