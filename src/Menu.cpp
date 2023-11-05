@@ -189,7 +189,7 @@ void printStudentsInUC(const set<Student>& students){
         return;
     } else {
         cout << "--------------------------------------------------\n";
-        cout << "It was not possible to find that class. Please, try again.\n";
+        cout << "It was not possible to find that UC. Please, try again.\n";
     }
 }
 

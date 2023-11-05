@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/tomas/CLionProjects/AEDProject/schedules
+# Install script for directory: D:/UPorto/AED/schedule/final_version/schedules
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/tomas/CLionProjects/AEDProject/schedules/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/UPorto/AED/schedule/final_version/schedules/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
