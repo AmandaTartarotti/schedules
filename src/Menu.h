@@ -10,7 +10,8 @@ void printMenu();
 void menuStudents(const ManageSchedule& schedule);
 void menuSchedule(const ManageSchedule& schedule);
 void printMenuRequest();
-
+void printMenuOccupation();
+void showOccupationUc(const set<UcClass>& classes);
 void showOccupation(const set<UcClass>& classes);
 void printAllStudents(const set<Student>& student);
 void printStudentsInClass(const set<Student>& students);

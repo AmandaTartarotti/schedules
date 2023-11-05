@@ -301,6 +301,40 @@ void printUcSchedule(const set<UcClass>& classes) {
     }
 }
 
+void printMenuOccupation() {
+    cout << "--------------------------------------------------\n";
+    cout << "Choose one option:" << endl;
+    cout << "1 - Consult occupation of a class" << endl;
+    cout << "2 - Consult occupation of a UC" << endl;
+    cout << "0 - Exit" << endl;
+    cout << "--------------------------------------------------\n";
+    cout << "Option:";
+}
+
+void showOccupationUc(const set<UcClass>& classes){
+    string ucCode;
+    int ocuppation = 0;
+    bool classExist = false;
+    cout << "--------------------------------------------------\n";
+    cout << "Enter the UC code (L.EICXXX or UPXXX):";
+    cin >> ucCode;
+
+    for (auto class_ : classes) {
+        if (class_.getUcCode() == ucCode){
+            classExist = true;
+            ocuppation += class_.getSize();
+        }
+    }
+
+    if (!classExist) {
+        cout << "It was not possible to find the UC. Please try again.\n";
+        return;
+    }
+
+    cout << "The UC " << ucCode << " has " << ocuppation << " student(s) enrolled." << endl;
+    return;
+}
+
 void showOccupation(const set<UcClass>& classes) {
     string ucCode, classCode;
     cout << "--------------------------------------------------\n";

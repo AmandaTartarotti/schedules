@@ -51,7 +51,21 @@ int main(){
                 scheduleState.push(manageschedule);
                 break;
             case '5':
-                showOccupation(manageschedule.getAllClasses());
+                printMenuOccupation();
+                cin >> menuId;
+                switch (menuId) {
+                    case '0':
+                        break;
+                    default:
+                        cout << "Invalid option. Exiting." << endl;
+                        break;
+                    case '1':
+                        showOccupation(manageschedule.getAllClasses());
+                        break;
+                    case '2':
+                        showOccupationUc(manageschedule.getAllClasses());
+                        break;
+                }
                 break;
             case '6':
                 studentsInAtLeastN_UCs(manageschedule.getAllStudents());

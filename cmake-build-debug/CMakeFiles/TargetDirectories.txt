@@ -1,4 +1,4 @@
-D:/UPorto/AED/schedule/alternative_version/schedules/cmake-build-debug/CMakeFiles/schedules.dir
-D:/UPorto/AED/schedule/alternative_version/schedules/cmake-build-debug/CMakeFiles/Doxygen.dir
-D:/UPorto/AED/schedule/alternative_version/schedules/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/UPorto/AED/schedule/alternative_version/schedules/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/UPorto/AED/schedule/alternative__version/schedules/cmake-build-debug/CMakeFiles/schedules.dir
+D:/UPorto/AED/schedule/alternative__version/schedules/cmake-build-debug/CMakeFiles/Doxygen.dir
+D:/UPorto/AED/schedule/alternative__version/schedules/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/UPorto/AED/schedule/alternative__version/schedules/cmake-build-debug/CMakeFiles/rebuild_cache.dir

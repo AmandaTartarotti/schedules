@@ -381,7 +381,7 @@ void ManageSchedule::requestSwitch(){
 
 void ManageSchedule::accessRecord(){
     if (record.empty()) {
-        cout << "--------------------------------------------------\n"
+        cout << "--------------------------------------------------\n";
         cout << "There are no processed requests.\n";
     }
     while(!record.empty()) {
