@@ -19,53 +19,51 @@ private:
     vector<Lecture> lectureClass;
 public:
     /**
-     * @brief Constructor of a UcClass object
-     * @param uccode_
-     * @param classnum_
+     * @brief constructor of a UcClass object
      */
     UcClass(const string& uccode_, const string& classnum_);
     /**
-     * @brief Acesses the code of the UC
+     * @brief accesses the code of the UC
      * @complexity O(1)
      */
     string getUcCode() const;
     /**
-     * @brief Acesses the code of the class
+     * @brief accesses the code of the class
      * @complexity O(1)
      */
     string getClassNum() const;
     /**
-     * @brief Acesses the size of the class
+     * @brief accesses the size of the class
      * @complexity O(1)
      */
     int getSize() const;
     /**
-     * @brief Increments the size of a UcClass
+     * @brief increments the size of a UcClass
      * @complexity O(1)
      */
     void incrementSize();
     /**
-     * @brief Decrements the size of a UcClass
+     * @brief decrements the size of a UcClass
      * @complexity O(1)
      */
     void decrementSize();
     /**
-    * @brief Defines the "<" operator to compare UcClass objects by UC code and class code
+    * @brief defines the "<" operator to compare UcClass objects by UC code and class code
     * @complexity O(1)
     */
     bool operator<(UcClass s) const;
     /**
-    * @brief Defines the "==" operator to compare UcClass objects by UC code and class code
+    * @brief defines the "==" operator to compare UcClass objects by UC code and class code
     * @complexity O(1)
     */
     bool operator==(UcClass s);
     /**
-     * @brief Adds a lecture to a UcClass
+     * @brief adds a lecture to a UcClass
      * @complexity O(1)
      */
     void addLecture(const Lecture& lecture);
     /**
-     * @brief Acesses the lectures of a UcClass
+     * @brief accesses the lectures of a UcClass
      * @complexity O(1)
      */
     vector<Lecture> getLecture() const;

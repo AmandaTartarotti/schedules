@@ -396,3 +396,16 @@ void ManageSchedule::accessRecord(){
         record.pop();
     }
 }
+
+void ManageSchedule::write(const string& path) const {
+    ofstream of;
+    of.open(path + "students_classes.csv", ofstream::out | ofstream::trunc);
+    of.close();
+    of.open(path + "students_classes.csv", ofstream::out | ofstream::app);
+    of << "StudentCode,StudentName,UcCode,ClassCode\n";
+    for (Student student : students) {
+        for (UcClass class_ : student.getClasses()) {
+            of << student.getCode() << ',' << student.getName() << ',' << class_.getUcCode() << ',' << class_.getClassNum() << '\n';
+        }
+    }
+}

@@ -95,5 +95,6 @@ int main(){
                 break;
         }
     }
+    manageschedule.write(path);
     return 0;
 }
