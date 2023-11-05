@@ -121,22 +121,50 @@ void ManageSchedule::processRequests() {
         cout << "There are no requests in the waiting list." << "\n";
         return;
     }
-    while (!requests.empty()) {
-        Request request = requests.front();
-        requests.pop();
-        switch (request.operation) {
-            case 1:
-                addClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
-                break;
-            case 2:
-                removeClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
-                break;
-        }
-    }
 
+    int option = 0;
+    cout << "--------------------------------------------------" << endl;
+    cout << "Choose one option:" << endl;
+    cout << "1 - Process one request" << endl;
+    cout << "2 - Process all requests" << endl;
+    cout << "0 - Exit" << endl;
+    cout << "--------------------------------------------------" << endl;
+    cout << "Option:"; cin >> option;
+
+    switch (option) {
+        case 0:
+            return;
+        default:
+            cout << "Invalid option. Please try again." << endl;
+            return;
+        case 2:
+            while (!requests.empty()) {
+                Request request = requests.front();
+                requests.pop();
+                switch (request.operation) {
+                    case 1:
+                        addClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
+                        break;
+                    case 2:
+                        removeClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
+                        break;
+                }
+            }
+        case 1:
+            Request request = requests.front();
+            requests.pop();
+            switch (request.operation) {
+                case 1:
+                    addClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
+                    break;
+                case 2:
+                    removeClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
+                    break;
+            }
+    }
 }
 
-Student ManageSchedule::getStudent() const{
+Student ManageSchedule::getStudent() const {
     int numUp;
     cout << "--------------------------------------------------\n";
     cout << "Please, enter the student's up number:";
@@ -151,11 +179,11 @@ Student ManageSchedule::getStudent() const{
     return *it;
 }
 
-UcClass ManageSchedule::getUcclass() const{
+UcClass ManageSchedule::getUcClass() const{
     string classCode, ucCode;
-    cout << "Enter the UC code: ";
+    cout << "Enter the UC code:";
     cin >> ucCode;
-    cout << "Enter the class code: ";
+    cout << "Enter the class code:";
     cin >> classCode;
     cout << "--------------------------------------------------\n";
 
@@ -170,7 +198,7 @@ void ManageSchedule::requestRemove(int option) {
         return;
     }
 
-    UcClass class_ = getUcclass();
+    UcClass class_ = getUcClass();
 
     for (auto newClass : newStudent.getClasses()) {
         if (newClass == class_) {
@@ -213,7 +241,7 @@ void ManageSchedule::requestAdd(int option) {
         return;
     }
 
-    UcClass class_ = getUcclass();
+    UcClass class_ = getUcClass();
     auto it1 = classes.find(class_);
     if (it1 == classes.end()) {
         cout << "Class not found. Please, try again.\n";
@@ -287,8 +315,8 @@ void ManageSchedule::requestSwitch(){
         return;
     }
 
-    cout << "First, let's check the Uc and Class the student wants to leave" << endl;
-    UcClass classLeave = getUcclass();
+    cout << "Enter the Uc and Class that you want to leave:" << endl;
+    UcClass classLeave = getUcClass();
 
     bool classFound = false;
     for (auto newClass : newStudent.getClasses()) {
@@ -309,20 +337,23 @@ void ManageSchedule::requestSwitch(){
         return;
     }
 
-    cout << "Now, let's talk about the Uc and Class the student wants to get in" << endl;
-    UcClass classAdd = getUcclass();
+    cout << "Now, please, enter the Uc and Class that you want to get in:" << endl;
+    UcClass classAdd = getUcClass();
     auto it1 = classes.find(classAdd);
     if (it1 == classes.end()) {
+        requests.pop();
         cout << "Class not found. Please, try again.\n";
         return;
     }
 
     for (UcClass tClass_ : newStudent.getClasses()) {
         if (tClass_ == classAdd) {
+            requests.pop();
             cout << "The student is already enrolled on that class. Please, try again.\n";
             return;
         }
         if (tClass_.getUcCode() == classAdd.getUcCode()) {
+            requests.pop();
             cout << "The student is already enrolled on that UC. Please, try again.\n";
             return;
         }

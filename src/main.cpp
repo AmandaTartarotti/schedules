@@ -13,7 +13,8 @@ int main(){
     manageschedule.readStudentClasses(path);
     bool state = true;
     int menuId = 0;
-
+    stack<ManageSchedule> scheduleState;
+    scheduleState.push(manageschedule);
     while(state) {
         printMenu();
         cin >> menuId;
@@ -46,6 +47,7 @@ int main(){
                 break;
             case 4:
                 manageschedule.processRequests();
+                scheduleState.push(manageschedule);
                 break;
             case 5:
                 showOccupation(manageschedule.getAllClasses());
@@ -55,6 +57,17 @@ int main(){
                 break;
             case 7:
                 manageschedule.accessRecord();
+                break;
+            case 8:
+                if (scheduleState.size() >= 2) {
+                    scheduleState.pop();
+                    manageschedule = scheduleState.top();
+                    cout << "--------------------------------------------------\n";
+                    cout << "Undo successful.\n";
+                } else {
+                    cout << "--------------------------------------------------\n";
+                    cout << "Nothing to undo.\n";
+                }
                 break;
             case 0:
                 cout << "--------------------------------------------------\n";
