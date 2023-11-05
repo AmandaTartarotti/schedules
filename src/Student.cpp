@@ -21,12 +21,12 @@ void Student::addClass(const UcClass& class_) {
     classes.push_back(class_);
 }
 
-vector<UcClass> Student::getClasses() const {
+list<UcClass> Student::getClasses() const {
     return classes;
 }
 
 void Student::removeClass(UcClass class_) {
-    vector<UcClass>::iterator itr;
+    list<UcClass>::iterator itr;
     for (itr = classes.begin(); itr != classes.end(); itr++)
         if (itr->getUcCode() == class_.getUcCode() && itr->getClassNum() == class_.getClassNum()) {
             break;

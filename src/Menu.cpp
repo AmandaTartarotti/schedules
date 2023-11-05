@@ -25,7 +25,7 @@ void menuStudents(const ManageSchedule& schedule) {
     cout << "Choose one option:" << endl;
     cout << "1 - Check all students" << endl;
     cout << "2 - Check students within a class" << endl;
-    //cout << "3 - Check students within a curricular unit" << endl;
+    cout << "3 - Check students within a curricular unit" << endl;
     cout << "0 - Exit" << endl;
     cout << "--------------------------------------------------\n";
     cout << "Option:";
@@ -37,6 +37,9 @@ void menuStudents(const ManageSchedule& schedule) {
             break;
         case 2:
             printStudentsInClass(schedule.getAllStudents());
+            break;
+        case 3:
+            printStudentsInUC(schedule.getAllStudents());
             break;
         case 0:
             break;
@@ -80,7 +83,7 @@ void printMenuRequest() {
     cout << "Choose one option:" << endl;
     cout << "1 - Add Student to a new UC" << endl;
     cout << "2 - Remove Student from a UC" << endl;
-    cout << "3 - Switch Student from a UC to another" << endl;
+    cout << "3 - Switch Student from a UC/class to another" << endl;
     cout << "0 - Exit" << endl;
     cout << "--------------------------------------------------\n";
     cout << "Option:";
@@ -151,6 +154,30 @@ void printStudentsInClass(const set<Student>& students) {
     for (const Student & student : students) {
         for (const UcClass & class_ : student.getClasses()) {
             if ((UcClass) class_ == newClass) {
+                studentset.insert(student);
+                break;
+            }
+        }
+    }
+
+    if (!studentset.empty()) {
+        printAllStudents(studentset);
+        return;
+    } else {
+        cout << "--------------------------------------------------\n";
+        cout << "It was not possible to find that class. Please, try again.\n";
+    }
+}
+
+void printStudentsInUC(const set<Student>& students){
+    string ucCode, classCode;
+    cout << "Enter the UC code (L.EICXXX or UPXXX):";
+    cin >> ucCode;
+
+    set<Student> studentset;
+    for (const Student & student : students) {
+        for (const UcClass & class_ : student.getClasses()) {
+            if (class_.getUcCode() == ucCode) {
                 studentset.insert(student);
                 break;
             }

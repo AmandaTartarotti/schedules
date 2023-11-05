@@ -15,6 +15,7 @@ void showOccupationUc(const set<UcClass>& classes);
 void showOccupation(const set<UcClass>& classes);
 void printAllStudents(const set<Student>& student);
 void printStudentsInClass(const set<Student>& students);
+void printStudentsInUC(const set<Student>& students);
 void printStudentSchedule(const set<Student>& students);
 void printClassSchedule(const set<UcClass>& classes);
 void printUcSchedule(const set<UcClass>& classes);

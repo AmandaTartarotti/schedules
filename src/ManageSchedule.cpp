@@ -133,10 +133,10 @@ void ManageSchedule::processRequests() {
 
     switch (option) {
         case '0':
-            return;
+            break;
         default:
             cout << "Invalid option. Please try again." << endl;
-            return;
+            break;
         case '2':
             while (!requests.empty()) {
                 Request request = requests.front();
@@ -150,6 +150,8 @@ void ManageSchedule::processRequests() {
                         break;
                 }
             }
+            cout << "All requests were processed!" << endl;
+            break;
         case '1':
             Request request = requests.front();
             requests.pop();
@@ -161,6 +163,8 @@ void ManageSchedule::processRequests() {
                     removeClassStudent(request.numUp, UcClass(request.ucCode, request.classNum));
                     break;
             }
+            cout << "The request was processed!" << endl;
+            break;
     }
 }
 

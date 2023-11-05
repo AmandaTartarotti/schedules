@@ -7,7 +7,7 @@
 #include <iostream>
 #include <set>
 #include <utility>
-#include <vector>
+#include <list>
 #include "UcClass.h"
 using namespace std;
 
@@ -16,7 +16,7 @@ class Student {
 private:
     int code;
     string name;
-    vector<UcClass> classes;
+    list<UcClass> classes;
 public:
     Student() = default;
     Student(int code_): code(code_) {}
@@ -25,7 +25,7 @@ public:
     string getName() const;
     void addClass(const UcClass& class_);
     void removeClass(UcClass class_);
-    vector<UcClass> getClasses() const;
+    list<UcClass> getClasses() const;
     bool operator<(const Student& s) const;
     bool operator>(const Student& s) const;
     bool checkAvailability(Lecture lecture) const;
