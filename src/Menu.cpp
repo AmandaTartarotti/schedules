@@ -141,7 +141,7 @@ void printAllStudents(const set<Student>& student)  {
 
 void printStudentsInClass(const set<Student>& students) {
     string ucCode, classCode;
-    cout << "Enter the UC code (L.EICXXX):";
+    cout << "Enter the UC code (L.EICXXX or UPXXX):";
     cin >> ucCode;
     cout << "Enter the class code (XLEICXX):";
     cin >> classCode;
@@ -160,20 +160,28 @@ void printStudentsInClass(const set<Student>& students) {
     if (!studentset.empty()) {
         printAllStudents(studentset);
         return;
+    } else {
+        cout << "--------------------------------------------------\n";
+        cout << "It was not possible to find that class. Please, try again.\n";
     }
-    cout << "--------------------------------------------------\n";
-    cout << "It was not possible to find that class. Please, try again.\n";
 }
 
 void studentsInAtLeastN_UCs(const set<Student>& student){
-    int num = 0;
+    string num;
     int count = 0;
     cout << "--------------------------------------------------\n";
     cout << "Enter the minimum number of UCs a student must be registered in:";
     cin >> num;
     cout << "--------------------------------------------------\n";
+
+    if (!isNumber(num)) {
+        cout << "The given number is not valid. Please, try again.\n";
+        return;
+    }
+
+    int n = stoi(num);
     for (const Student& stud : student){
-        if (stud.getClasses().size() > num){
+        if (stud.getClasses().size() > n){
             count++;
         }
     }
@@ -181,12 +189,18 @@ void studentsInAtLeastN_UCs(const set<Student>& student){
 }
 
 void printStudentSchedule(const set<Student>& students) {
-    int numUp;
+    string num;
     cout << "--------------------------------------------------\n";
     cout << "Please, enter the student's up number:";
-    cin >> numUp;
+    cin >> num;
     cout << "--------------------------------------------------\n";
 
+    if (!isNumber(num)) {
+        cout << "The given number is not valid. Please, try again.\n";
+        return;
+    }
+
+    int numUp = stoi(num);
     Student student(numUp);
     auto it = students.find(student);
     if (it == students.end()) {
@@ -254,7 +268,7 @@ void printClassSchedule(const set<UcClass>& classes) {
 void printUcSchedule(const set<UcClass>& classes) {
     string ucCode;
     cout << "--------------------------------------------------\n";
-    cout << "Enter the UC code (L.EICXXX):";
+    cout << "Enter the UC code (L.EICXXX or UPXXX):";
     cin >> ucCode;
     cout << "--------------------------------------------------\n";
 
@@ -290,7 +304,7 @@ void printUcSchedule(const set<UcClass>& classes) {
 void showOccupation(const set<UcClass>& classes) {
     string ucCode, classCode;
     cout << "--------------------------------------------------\n";
-    cout << "Enter the UC code (L.EICXXX):";
+    cout << "Enter the UC code (L.EICXXX or UPXXX):";
     cin >> ucCode;
     cout << "Enter the class code (XLEICXX):";
     cin >> classCode;
@@ -303,4 +317,13 @@ void showOccupation(const set<UcClass>& classes) {
         return;
     }
     cout << "It was not possible to find the class. Please try again.\n";
+}
+
+bool isNumber(const string& num) {
+    for (char digit : num) {
+        if (!isdigit(digit)) {
+            return false;
+        }
+    }
+    return (!num.empty());
 }

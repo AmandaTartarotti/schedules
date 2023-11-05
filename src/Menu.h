@@ -19,4 +19,6 @@ void printClassSchedule(const set<UcClass>& classes);
 void printUcSchedule(const set<UcClass>& classes);
 void studentsInAtLeastN_UCs(const set<Student>& student);
 
+bool isNumber(const string &num);
+
 #endif //SCHEDULES_MENU_H

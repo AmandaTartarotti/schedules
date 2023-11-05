@@ -122,7 +122,7 @@ void ManageSchedule::processRequests() {
         return;
     }
 
-    int option = 0;
+    char option = '0';
     cout << "--------------------------------------------------" << endl;
     cout << "Choose one option:" << endl;
     cout << "1 - Process one request" << endl;
@@ -132,12 +132,12 @@ void ManageSchedule::processRequests() {
     cout << "Option:"; cin >> option;
 
     switch (option) {
-        case 0:
+        case '0':
             return;
         default:
             cout << "Invalid option. Please try again." << endl;
             return;
-        case 2:
+        case '2':
             while (!requests.empty()) {
                 Request request = requests.front();
                 requests.pop();
@@ -150,7 +150,7 @@ void ManageSchedule::processRequests() {
                         break;
                 }
             }
-        case 1:
+        case '1':
             Request request = requests.front();
             requests.pop();
             switch (request.operation) {
@@ -165,11 +165,19 @@ void ManageSchedule::processRequests() {
 }
 
 Student ManageSchedule::getStudent() const {
-    int numUp;
+    string nUp;
     cout << "--------------------------------------------------\n";
     cout << "Please, enter the student's up number:";
-    cin >> numUp;
+    cin >> nUp;
     cout << "--------------------------------------------------\n";
+
+    for (char digit : nUp) {
+        if (!isdigit(digit)) {
+            return Student(-1);
+        }
+    }
+
+    int numUp = stoi(nUp);
     Student student(numUp);
     auto it = students.find(student);
     if (it == students.end()) {
@@ -181,9 +189,9 @@ Student ManageSchedule::getStudent() const {
 
 UcClass ManageSchedule::getUcClass() const{
     string classCode, ucCode;
-    cout << "Enter the UC code:";
+    cout << "Enter the UC code (L.EICXXX or UPXXX):";
     cin >> ucCode;
-    cout << "Enter the class code:";
+    cout << "Enter the class code (XLEICXX):";
     cin >> classCode;
     cout << "--------------------------------------------------\n";
 
@@ -195,6 +203,7 @@ UcClass ManageSchedule::getUcClass() const{
 void ManageSchedule::requestRemove(int option) {
     Student newStudent = getStudent();
     if (newStudent.getCode() == -1) {
+        cout << "The given number is not valid. Please, try again.\n";
         return;
     }
 
@@ -238,6 +247,7 @@ void ManageSchedule::removeClassStudent(int numUp, const UcClass& class_) {
 void ManageSchedule::requestAdd(int option) {
     Student newStudent = getStudent();
     if (newStudent.getCode() == -1) {
+        cout << "The given number is not valid. Please, try again.\n";
         return;
     }
 
@@ -273,7 +283,7 @@ void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
     Student stud(numUp);
     auto it1 = students.find(stud);
     if (it1->getClasses().size() == 7) {
-        record.push("The student " + to_string(numUp) + " is already registered in 7 UCs. It is not possible to include him/her in the UC " + class_.getUcCode() + ".");
+        record.push("The student " + to_string(numUp) + " is already registered in 7 UCs. It was not possible to include him/her in the UC " + class_.getUcCode() + ".");
     }
 
     if (it->getSize() >= 27) {
@@ -287,13 +297,13 @@ void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
     }
     for (auto itr = it; itr != --classes.begin() and itr->getUcCode() == it->getUcCode(); itr--) {
         if (it->getSize() + 1 - itr->getSize() > 4) {
-            record.push("The class " + class_.getClassNum() + " cannot receive another student to maintain the balance of classes occupation. It is not possible to include the student " + to_string(numUp) + ".");
+            record.push("The class " + class_.getClassNum() + " cannot receive another student to maintain the balance of classes occupation. It was not possible to include the student " + to_string(numUp) + ".");
             return;
         }
     }
     for (const Lecture& lecture : it->getLecture()) {
         if (!it1->checkAvailability(lecture)) {
-            record.push("The new class" + class_.getClassNum() + "overlaid the student" + to_string(numUp) + "schedule. It is not possible to conclude the request.");
+            record.push("The new class " + class_.getClassNum() + " overlaid the student " + to_string(numUp) + " schedule. It was not possible to conclude the request.");
             return;
         }
     }
@@ -312,6 +322,7 @@ void ManageSchedule::addClassStudent(int numUp, const UcClass& class_) {
 void ManageSchedule::requestSwitch(){
     Student newStudent = getStudent();
     if (newStudent.getCode() == -1) {
+        cout << "The given number is not valid. Please, try again.\n";
         return;
     }
 
@@ -369,6 +380,10 @@ void ManageSchedule::requestSwitch(){
 }
 
 void ManageSchedule::accessRecord(){
+    if (record.empty()) {
+        cout << "--------------------------------------------------\n"
+        cout << "There are no processed requests.\n";
+    }
     while(!record.empty()) {
         string record_ = record.top();
         std::cout << record_ << std::endl;
