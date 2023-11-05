@@ -59,13 +59,12 @@ public:
      */
     list<UcClass> getClasses() const;
     /**
-     * @brief Defines the "<" operator
+     * @brief Defines the "<" operator to compare students by up code
      * @complexity O(1)
-     * @return The lesser of the students' up code
      */
     bool operator<(const Student& s) const;
     /**
-    * @brief Defines the ">" operator
+    * @brief Defines the ">" operator to compare students by up code
     * @complexity O(1)
     * @return The larger of the students' up code
     */
@@ -74,6 +73,7 @@ public:
      * @brief Checks if the students schedule has an available spot for a given lecture
      * @param lecture
      * @return true if there is a spot available and false if not
+     * @complexity O(n^2)
      */
     bool checkAvailability(Lecture lecture) const;
 };
