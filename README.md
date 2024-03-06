@@ -1,9 +1,9 @@
-# schedules  (Grade: 18.9 / 20)
+# Schedules  (Grade: 18.9 / 20)
 
 A project was done in one month with @goncaloremelhe and @tomaspm05.
 This project focused on managing schedules and was developed using real information about L.EIC’s schedules for the 1st semester of the academic year 2022/2023 with anonymized student data. The system incorporates various functionalities related to schedule management, including modification, searching, viewing, sorting, and listing.
 
-Statement of Work (SoW)
+Statement of Work
 In this project, the following tasks are to be accomplished:
 
 - [x] Data Parsing: Read and parse the given data into appropriate data structures considering the advantages and drawbacks of each structure.
